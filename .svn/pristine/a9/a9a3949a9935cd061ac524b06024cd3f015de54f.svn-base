@@ -1,0 +1,177 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<title>泰康之家官方网站</title>
+<meta content="泰康之家,高端养老社区,养老服务,养老医疗" name="keywords" />
+<meta
+	content="泰康之家官方网站，中国高端养老社区，详细介绍泰康之家养老社区的养老服务、养老医疗。泰康之家致力于打造大规模、全功能、高品质的国际标准医养社区，以医养结合、活力养老、舒适居住为核心，为老人提供全方位的养老生活解决方案。"
+	name="description" />
+
+<meta itemprop="operatingSystems" content="Windows,Mac,linux" />
+<%@ include file="/include.jsp"%>
+<link href="<%=basePath%>/static/tkcow/css/main.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=basePath%>/static/tkcow/css/banner.css">
+<script src="<%=basePath%>/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script src="<%=basePath%>/static/json.min.js"></script>
+<script>
+	$(function() {
+		$(".content_main li").hover(
+				function() {
+					$(this).find("ul").show();
+					$(this).find("span").css("background",
+							"url(img/a2.png)  center center no-repeat");
+				},
+				function() {
+					$(this).find("ul").hide();
+					$(this).find("span").css("background",
+							"url(img/a1.png)  center center no-repeat");
+				});
+		$("#sqzl_id").click(function() {
+			$("#windownbg").css("display", "block");
+			$(".white_content_sqzl").css("display", "block");
+		});
+		$("#sqzl_gb_id").click(function() {
+			$("#windownbg").css("display", "none");
+			$(".white_content_sqzl").css("display", "none");
+		});
+		$("#yycg_id").click(function() {
+			$("#windownbg").css("display", "block");
+			$(".white_content_yycg").css("display", "block");
+		});
+		$("#yycg_gb_id").click(function() {
+			$("#windownbg").css("display", "none");
+			$(".white_content_yycg").css("display", "none");
+		});
+	});
+</script>
+<body>
+ <div class="allContent">
+         <%@ include file="/WEB-INF/view/tkcow/titile.jsp"%>
+         
+    <div class="banner">
+        <div class="container">
+            <div id="slides">
+            </div>
+       </div>
+       
+     </div>
+     
+	<div class="synr1" style="margin-top: -74px;">
+		<div class="main">
+			<div class="left">
+				<div class="ltitle" style="color: #21acd8">
+					| <a href="/" style="color: #21acd8">网站地图</a>
+				</div>
+				<div class="leftdh">
+					<ul>
+						<li class="no"></li>
+						<c:if test="${!empty rList}">
+							<c:forEach items="${rList}" var="item"  varStatus="status">
+								<li>
+									<a href="${item.MOD_URL}" title="${item.MOD_NAME}" style="">${item.MOD_NAME}</a>
+								</li>
+							</c:forEach>
+						</c:if>
+					</ul>
+				</div>
+			</div>
+			<div class="right">
+			<div class="righttitle">网站地图</div>
+			<div class="rightnr">
+		
+     <div class="synrbottom"></div>
+<style>
+.map {
+	margin: 0px 30px;
+	clear: both;
+	margin-top: 25px
+}
+
+.map li {
+	float: left;
+	display: inline;
+	color: #666666;
+	height: 23px;
+	line-height: 23px;
+	background: none;
+	width: 150px
+}
+
+.map li a {
+	color: #666666
+}
+
+.lmbt {
+	line-height: 28px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #b4a997;
+	height: 28px;
+}
+</style>
+					<c:if test="${!empty cList}">
+							<c:forEach items="${cList}" var="item2"  varStatus="status">
+								<div class="map">
+								<div class="lmbt">
+									<a href="${item2.url}">${item2.name}</a>&gt;&gt;
+								</div>
+								<ul>
+									<c:set var="child" value="${item2.child}"/>
+									<c:if test="${!empty child}">
+										<c:forEach items="${child}" var="item3"  varStatus="status">
+											<li><a href="${item3.MOD_URL}">${item3.MOD_NAME}</a></li>
+										</c:forEach>
+									</c:if>
+								</ul>
+								</div>
+								<div class="clear"></div>
+							</c:forEach>
+						</c:if>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	  <%@ include file="/WEB-INF/view/tkcow/foot.jsp"%>
+	<script src="<%=basePath%>/static/tkcow/js/jquery.slides.min.js"></script>
+<script>
+$(function() {
+	var WIDTH=$(window).width();
+	$('#slides').slidesjs({
+	width:WIDTH,
+	height:382,
+	start: 1,
+	play: {
+	  auto: true,
+	  swap: true, 
+	  pauseOnHover: true,
+	},
+	navigation:{
+	  active: true,//是否开启左右按钮
+	  
+	},
+	effect: {
+      slide: {
+        // 滑动效果设置.
+        speed: 200
+          // [number] 速度以毫秒为单位的幻灯片动画。
+      	}
+	  }
+  }); 
+	
+	
+ 
+	
+});
+
+</script>
+</body>
+</html>

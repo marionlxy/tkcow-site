@@ -1,0 +1,197 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="泰康之家,高端养老社区,养老服务,养老医疗" name="keywords"/>
+<meta content="泰康之家官方网站，中国高端养老社区，详细介绍泰康之家养老社区的养老服务、养老医疗。泰康之家致力于打造大规模、全功能、高品质的国际标准医养社区，以医养结合、活力养老、舒适居住为核心，为老人提供全方位的养老生活解决方案。"  name="description"  />
+
+<meta itemprop="operatingSystems" content="Windows,Mac,linux"/> 
+<title>泰康之家官方网站</title>
+<%@ include file="/include.jsp" %>
+<link href="<%=basePath%>/static/tkcow/css/main.css" rel="stylesheet" />
+<link href="<%=basePath%>/static/tkcow/css/banner.css" rel="stylesheet">
+<link href="<%=basePath%>/static/tkcow/css/banner1.css" rel="stylesheet">
+<script src="<%=basePath%>/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script src="<%=basePath%>/static/tkcow/js/tkcontent.js"></script>
+
+<script>
+$(function(){
+	var banUrl = '<%=basePath%>' + '/' + '${banUrl}';
+	//var cs = "url('" + banUrl + "') no-repeat";
+	$(".banner2").find("img").attr("src",banUrl);
+	$("#ban_div").css("display","block");
+	var content = ${content};
+	var modName='${modName}';
+	sessionStorage.setItem("content",JSON.stringify(content));
+	$(".content_main li").hover(function(){
+		$(this).find("ul").show();
+		$(this).find("span").css("background","url(${rootPath}/static/tkcow/img/a2.png)  center center no-repeat");
+		},function(){
+			$(this).find("ul").hide();
+			$(this).find("span").css("background","url(${rootPath}/static/tkcow/img/a1.png)  center center no-repeat");
+ 			});
+	
+
+	$(".slidesjs-control").css("left","33px");
+	$(".right").empty();
+	var conte = sessionStorage.getItem("content");
+	conte=JSON.parse(conte);
+	$(".right").append(
+				'<div class="righttitle">'+modName+'</div><div class="rightnr">'+Base64.decode(conte.contentdt.hascontent)+'</div>');
+			for (var i = 0; i < conte.bannerlist.length; i++) {
+				var banImgUrl = '<%=basePath%>' + '/' + conte.bannerlist[i].BAN_IMG_URL;
+				var indexhtml='<div style="width:564px;height:174px;">'
+					+'<a href="'+conte.bannerlist[i].BAN_IMG_OUTSIDE+'"><img src="'+banImgUrl+'" style="width:282px;height:174px;background-size:100%;"></a></div>';
+				var banImgUrl1 = "";
+				var banOutSide = "";
+				if (i+1 < conte.bannerlist.length) {
+					banImgUrl1 = '<%=basePath%>' + '/' + conte.bannerlist[i+1].BAN_IMG_URL;
+					banOutSide = conte.bannerlist[i+1].BAN_IMG_OUTSIDE;
+					indexhtml = indexhtml +'<a href="'+banOutSide+'"><img src="'+banImgUrl1+'" style="width:282px;height:174px;background-size:100%;"></a></div>';
+					i = i + 1;
+				}
+				
+			$("#slides1").append(indexhtml);
+			}
+			
+	
+			slides();
+});
+function leftLiClick(obj){
+	$(obj).children("a").css("color","#f07905");
+	$(obj).siblings("li").children("a").css("color","#333");
+	$(obj).next("div").css("display","block");
+	$(obj).siblings("li").next("div").css("display","none");
+	}
+function left_change(obj){
+	$(obj).children("a").css("color","#f07905");
+	$(obj).siblings("li").children("a").css("color","#333");
+	}
+function more_text(obj){
+	
+	var clickTXT=$(obj).parents(".nrlist").find(".nrtitle").html();
+	var aList=$(".leftdh").children("ul").children("li").children("a");
+	for(var i=0;i<aList.length;i++){
+		if($(aList[i]).html()==clickTXT){
+			//console.log($(aList[i]));
+			$(aList[i]).parents("li").next("div").css("display","block");
+			$(aList[i]).parents("li").siblings("li").next("div").css("display","none");
+			break;
+			}
+		};
+
+	$(".slidesjs-control").css("left","33px");
+	$(".right").empty();
+	var conte = sessionStorage.getItem("content");
+	conte=JSON.parse(conte);
+	$(".right").append(
+				'<div class="righttitle">'+modName+'</div><div class="rightnr">'+conte.contentdt.hascontent+'</div>');
+			for (var i = 0; i < conte.bannerlist.length; i++) {
+				var banImgUrl = '<%=basePath%>' + '/' + conte.bannerlist[i].BAN_IMG_URL;
+				var banImgUrl1 = "";
+				var bannerOutSide = "";
+				if (i*2+1 <= conte.bannerlist.length) {
+					banImgUrl1 = '<%=basePath%>' + '/' + conte.bannerlist[i+1].BAN_IMG_URL;
+					bannerOutSide = conte.bannerlist[i+1].BAN_IMG_OUTSIDE;
+				}
+				
+				var indexhtml='<div style="width:564px;height:174px;">'
+					+'<a href="'+conte.bannerlist[i].BAN_IMG_OUTSIDE+'"><img src="'+banImgUrl+'" style="width:282px;height:174px;background-size:100%;"></a>'
+					+'<a href="'+bannerOutSide+'"><img src="'+banImgUrl1+'" style="width:282px;height:174px;background-size:100%;"></a>'
+					+'</div>';
+					i=i+1;
+				$("#slides1").append(indexhtml);
+			}	
+			slides();
+}
+	
+</script>
+</head>
+<body>
+     <div class="allContent">
+       <%@ include file="/WEB-INF/view/tkcow/titile.jsp"%>
+    
+     <div class="banner2" >
+        <img src="" >
+    	<div class="bai"></div>
+    </div>
+    
+     <div class="synr1">
+        <div class="main">
+        <div class="left">
+  <%@ include file="/WEB-INF/view/leftmenu/leftmenuIndex.jsp"%>
+ </div>
+          <div class="right">
+              <div class="righttitle"></div>
+              <div class="rightnr">
+                 
+                  </div>
+                </div>
+           </div>
+           
+        </div>
+        
+        </div>
+ <!--   banner 开始      -->       
+<div id="ban_div" style="width:100%;background-color: #fdfbfb;height:auto;margin-bottom:0px;display:none;">
+	<div style="width:920px; height:174px; margin:0 auto;">
+    <div class="banner" style="width:630px;float:right;">
+            <div class="container">
+                <div id="slides1">
+                 	
+                </div>
+           </div>
+    </div>
+</div>
+ <!--   banner 结束      --> 
+     <div class="synrbottom"></div>
+  </div>
+<%@ include file="/WEB-INF/view/tkcow/foot.jsp"%>
+
+
+ 
+       
+       <div id="floatLayer"> 
+       <%@ include file="/rightLogin.jsp"%>
+           <!--  <div style="cursor:pointer; float:right; height:256px; width:62px; overflow:hidden">
+             <img src="img/a0.jpg" width="62" border="0" onclick="javascript:window.open('http://chat.taikangzhijia.com/');">
+            <img src="img/a1.jpg" width="62" border="0" id="sqzl_id">
+            
+            <img src="img/a2.jpg" width="62" border="0" id="yycg_id">
+            
+            <img src="img/a3.jpg" width="62" border="0" onclick1="javascript:showbox('menzhen');">
+          </div> -->
+   		</div>
+   
+       <script src="<%=basePath%>/static/tkcow/js/jquery.slides.min.js"></script>
+        <script>
+		function slides(){
+			$('#slides1').slidesjs({
+				width:564,
+				height:174,
+				start: 1,
+				play: {
+				  auto: true,
+				  swap: true, 
+				  pauseOnHover: true,
+				},
+				navigation:{
+				  active: true,//是否开启左右按钮
+				  
+				},
+				effect: {
+				  slide: {
+					// 滑动效果设置.
+					speed: 200
+					  // [number] 速度以毫秒为单位的幻灯片动画。
+					}
+				  }
+			  }); 
+			
+			}
+       
+        </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+function getContextPath() {
+	var contextPath=document.location.href;
+	contextPath=contextPath.split("site")[0];
+	return contextPath+"site";
+}
+/**
+ * 初始化页面信息
+ */
+$(document).ready(function(){
+	var path=getContextPath();
+	//初始化首页滑动下拉菜单列表
+	/*$.ajax({
+		   type: "POST",
+		   datatype : "json",
+	  	   contentType : "application/json; charset=utf-8",
+		   url: path+"/homepage/queryTwoMenu",
+		   data: "",
+		   success: function(data){
+			var jsonData=JSON.parse(JSON.stringify(data)).menuList;
+			var savaData=JSON.stringify(jsonData);
+			sessionStorage.setItem("jsonData",savaData);
+		   }
+		});*/
+	
+	
+	
+	//初始化首页九宫格模块信息
+	$.ajax({
+		   type: "POST",
+		   datatype : "json",
+	  	   contentType : "application/json; charset=utf-8",
+		   url: path+"/homepage/queryHomeModel",
+		   data: "",
+		   success: function(data){
+			var jsonData=JSON.parse(JSON.stringify(data)).jsonParam;
+			var savaData=JSON.stringify(jsonData);
+			sessionStorage.setItem("jsonParam",savaData);
+			var spicObj=eval("("+savaData+")");
+				$("#homeModel").empty();
+				var rows="";
+			if(spicObj.length%3!=0){
+				 rows=spicObj.length/3+1;
+				
+			}else{
+				rows=spicObj.length/3;
+			}
+				 for(var i=0;i<spicObj.length;i++){
+					 		if(i<3){
+							 $("#homeModel").append('<dl>'
+						              +'<dd><a href="'+path+'/'+spicObj[i].AmodUrl+'">'+spicObj[i].AmodName+'</a></dd>'
+						              +'<dt> <div class="sypic">'
+						              +'<a href="'+path+'/'+spicObj[i].AmodUrl+'">'
+						              +'<img src="'+path+'/'+spicObj[i].Bimg+'" width="306" height="210" original="'+spicObj[i].Bimg+'" style="display: block;">'
+// 						              +'<div class="pic"><img src="img/pic1.png" width="20" height="19" original="img/pic1.png" style="display: block;"></div>'
+						              +'<span class="more">'+spicObj[i].Btitle+'</span>'
+						              +'<span class="content_desc">'+spicObj[i].Ccontent+'</span>'
+						            +'</a>'
+						            +'</div>'
+						            +'</dt>'
+						            +'</dl>');
+					 		}
+							if(i>=3 && i<6){
+								$("#homeModel").append('<dl>'
+							              +'<dd><a href="'+path+'/'+spicObj[i].AmodUrl+'">'+spicObj[i].AmodName+'</a></dd>'
+							              +'<dt> <div class="sypic">'
+							              +'<a href="'+path+'/'+spicObj[i].AmodUrl+'">'
+							              +'<img src="'+spicObj[i].Bimg+'" width="306" height="210" original="'+spicObj[i].Bimg+'" style="display: block;">'
+// 							              +'<div class="pic"><img src="img/pic1.png" width="20" height="19" original="img/pic1.png" style="display: block;"></div>'
+							              +'<span class="more" id="more1">'+spicObj[i].Btitle+'</span>'
+							              +'<span class="content_desc" id="zzjs">'+spicObj[i].Ccontent+'</span>'
+							            +'</a>'
+							            +'</div>'
+							            +'</dt>'
+							            +'</dl>');
+							}
+							if(i>=6){
+								 $("#homeModel").append('<dl>'
+							              +'<dd><a href="'+path+'/'+spicObj[i].AmodUrl+'">'+spicObj[i].AmodName+'</a></dd>'
+							              +'<dt> <div class="sypic">'
+							              +'<a href="'+path+'/'+spicObj[i].AmodUrl+'">'
+							              +'<img src="'+spicObj[i].Bimg+'" width="306" height="210" original="'+spicObj[i].Bimg+'" style="display: block;">'
+// 							              +'<div class="pic"><img src="img/pic1.png" width="20" height="19" original="img/pic1.png" style="display: block;"></div>'
+							              +'<span class="more" id="more2">'+spicObj[i].Btitle+'</span>'
+							              +'<span class="content_desc" id="zzjs1">'+spicObj[i].Ccontent+'</span>'
+							            +'</a>'
+							            +'</div>'
+							            +'</dt>'
+							            +'</dl>');
+							}
+
+			 }
+		   }
+		});
+	setTimeout(slides,100);
+	});
+
+function getHrefStr(obj){
+	var hrefStr=$(obj).attr("original");
+	var hrefLink;
+	if(hrefStr==""&&hrefStr==null&&hrefStr==undefined){
+		hrefLink="#";
+	}else{
+		hrefLink=hrefStr;
+	}
+		window.location.href=hrefLink;
+}
+
+function slides() {
+	var WIDTH=$(window).width();
+	$('#slides').slidesjs({
+	width:WIDTH,
+	height:382,
+	start: 1,
+	play: {
+	  auto: true,
+	  swap: true, 
+	  pauseOnHover: true
+	},
+	navigation:{
+	  active: true//是否开启左右按钮
+	  
+	},
+	effect: {
+      slide: {
+        // 滑动效果设置.
+        speed: 200
+          // [number] 速度以毫秒为单位的幻灯片动画。
+      	}
+	  }
+  }); 
+	
+};

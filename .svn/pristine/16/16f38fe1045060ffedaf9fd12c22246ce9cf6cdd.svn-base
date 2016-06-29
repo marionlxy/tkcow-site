@@ -1,0 +1,91 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="${rootPath}/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script src="${rootPath}/static/tkcow/js/common_iu.js"></script>
+<script>
+/**
+ * 初始化页面信息
+ */
+//初始化首页底部菜单列表
+$.ajax({
+	   type: "POST",
+	   datatype : "json",
+  	   contentType : "application/json; charset=utf-8",
+	   url: "${rootPath}/homepage/BottomMenu",
+	   data: "",
+	   success: function(data){
+//				alert(JSON.stringify(data));
+		var BottomMenuData=JSON.parse(JSON.stringify(data)).BottomMenu;
+		var dataLength=BottomMenuData.length;
+		loadSelect();
+		for(var i=0;i<dataLength;i++){
+			if(i==dataLength-1)
+				{
+					$("#BottomMenu").append('<a href="<%=basePath%>/'+BottomMenuData[i].MOD_URL+'">'+BottomMenuData[i].MOD_NAME+'</a>')
+				}
+			else{
+				$("#BottomMenu").append('<a href="<%=basePath%>/'+BottomMenuData[i].MOD_URL+'">'+BottomMenuData[i].MOD_NAME+'</a>|')
+			}
+		}
+	   }
+	});
+	
+	function loadSelect(){
+		var dictList = getDictList('weblink');
+		var jsonData=dictList.list;
+		var jsonDatas=JSON.parse(JSON.stringify(jsonData));
+		 for(var i=0;i<jsonData.length;i++){
+			  if(jsonData[i].dictTypeId=="weblink")
+				  {                  
+				  $("#searchUrl").append('<option value="'+jsonData[i].dictId+'">'+jsonData[i].dictName+'</option>')
+				  }
+		 }
+	}			 
+
+	
+</script>
+</head>
+<body>
+  <div class="foot">
+    <p>泰康人寿 版权所有  京ICP备15000213号<br>
+    Copyright Taikanglife.&nbsp;All Rights Reserved </p>
+      <p>本网站所有资讯与说明文字仅供参考，如有与本公司相关公告及产品法律文件不符，以相关公告及产品法律文件为准。 </p>
+        <div class="copyright">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      			<tbody>
+                    <tr>
+                        <td align="right" class="footdh" id="BottomMenu">
+<!--                             <a href="flshm.html">法律声明</a> |      -->
+<!--                             <a href="wzhdt.html">网站地图</a> |     -->
+<!--                             <a href="gywm.html">常见问题</a> |      -->
+<!--                             <a href="#">联系我们</a> |      -->
+<!--                             <a href="#">招聘信息</a> -->
+                         </td>
+                  </tr>
+            </tbody>
+        </table>
+    <div style="height:5px"></div>
+      <table width="283" border="0" align="right" cellpadding="0" cellspacing="0">
+        <tbody>
+        <tr>
+        <td width="30" height="29" align="center" valign="middle"><a href="http://weibo.com/p/1006063379672002/home?from=page_100606&amp;mod=TAB#place"><img src="${rootPath}/static/tkcow/img/s1.jpg"></a></td>
+        <td width="30" align="center" valign="middle"><a href="#"><img src="${rootPath}/static/tkcow/img/s2.jpg"></a></td>
+        <td width="30" align="center" valign="middle"><a href="#"><img src="${rootPath}/static/tkcow/img/s3.jpg"></a></td>
+        <td width="30" align="center" valign="middle"><a href="#"><img src="${rootPath}/static/tkcow/img/s4.jpg"></a></td> 
+          <td> 
+              <div class="search">
+                <select name="" id="searchUrl" class="inp" onchange="if(this.options[selectedIndex].value!=='-1')window.open(this.options[selectedIndex].value)">
+                  <option value="-1">访问泰康其他网站</option>
+                </select>
+             </div>
+         </td>
+     	<td width="10"></td>
+        </tr>
+      </tbody></table>
+      </div>
+	</div>
+</body>
+</html>

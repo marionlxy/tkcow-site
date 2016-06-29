@@ -1,0 +1,146 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>泰康之家官方网站</title>
+<meta content="泰康之家,高端养老社区,养老服务,养老医疗" name="keywords" />
+<meta
+	content="泰康之家官方网站，中国高端养老社区，详细介绍泰康之家养老社区的养老服务、养老医疗。泰康之家致力于打造大规模、全功能、高品质的国际标准医养社区，以医养结合、活力养老、舒适居住为核心，为老人提供全方位的养老生活解决方案。"
+	name="description" />
+
+<meta itemprop="operatingSystems" content="Windows,Mac,linux" />
+<%@ include file="/include.jsp" %>
+<link href="<%=basePath%>/static/tkcow/css/main.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=basePath%>/static/tkcow/css/banner.css">
+<script src="<%=basePath%>/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script src="<%=basePath%>/static/tkcow/js/tkcontent.js"></script>
+<script>
+	$(function() {
+		var banUrl = '<%=basePath%>' + '/' + '${banUrl}';
+		//var cs = "url('" + banUrl + "') no-repeat";
+		$(".banner2").find("img").attr("src",banUrl);
+		
+		var id = '${id}' ;
+		var parcont = ${parcont};
+		var chilrcont = ${chilrcont};
+		sessionStorage.setItem("parcont",JSON.stringify(parcont));
+		sessionStorage.setItem("chilrcont",JSON.stringify(chilrcont));
+		$(".content_main li").hover(
+				function() {
+					$(this).find("ul").show();
+					$(this).find("span").css("background",
+							"url(img/a2.png)  center center no-repeat");
+				},
+				function() {
+					$(this).find("ul").hide();
+					$(this).find("span").css("background",
+							"url(${rootPath}/static/tkcow/img/a1.png)  center center no-repeat");
+				});
+		var parcont = sessionStorage.getItem("parcont");
+		var chilrcont = sessionStorage.getItem("chilrcont");
+		var parcon=JSON.parse(parcont);
+		var chilrcon=JSON.parse(chilrcont); //转成对象
+		var parco = parcon.parcont;  //获取父节点内容
+		var chilrco = chilrcon.chirroco; //获取子节点内容
+		var chircont;//循环子节点数组内容
+		for (var i = 0; i < chilrco.length; i++) {
+			chircont=chilrco[i].chilrcont;
+		}
+		var content = "";
+		if (parco.content != null || parco.content != '') {
+			content = Base64.decode(Base64.decode(parco.content));
+		}
+		var xwhtml;
+			$("#rightn1").empty();
+			$("#rightn1").html(content);
+			//xwhtml='<div class="rightnr">'+content+'</div>';
+			$("#tbd").empty();
+			//$("#conmod").empty();
+			//console.log(chircont[0].mod_name)
+			for (var j = 0; j < chircont.length; j++) {
+				if(j==0){
+					xwhtml='<tr>'
+						+'<td width="72" valign="top" style="float:left;">'
+						+'<div style="background: url(${rootPath}/static/tkcow/img/dian_title.jpg) no-repeat; width: 72px; height: 50px; text-align: center;">'
+						+'<span style="padding-top: 25px; font-size: 18px; display: block; color: #018A7C" id="modname">'+chircont[j].mod_name+'</span>'
+						+'</div>'
+						+'</td>'
+						+'<td width="" style="float:left;">'
+						+'<div style="width: 500px; margin-left: 25px; font-size: 13px; line-height: 35px" id="conmod">'+Base64.decode(Base64.decode(chircont[j].CONTENT))
+						+'</div>'
+						+'</td>'
+						+'</tr>'
+				}else{
+					xwhtml='<tr>'
+						+'<td width="72" valign="top" style="float:left;margin-top:30px;">'
+						+'<div style="background: url(${rootPath}/static/tkcow/img/dian_title.jpg) no-repeat; width: 72px; height: 50px; text-align: center;">'
+						+'<span style="padding-top: 25px; font-size: 18px; display: block; color: #018A7C" id="modname">'+chircont[j].mod_name+'</span>'
+						+'</div>'
+						+'</td>'
+						+'<td width="" style="float:left;margin-top:30px;">'
+						+'<div style="width: 500px; margin-left: 25px; font-size: 13px; line-height: 35px" id="conmod">'+Base64.decode(Base64.decode(chircont[j].CONTENT))
+						+'</div>'
+						+'</td>'
+						+'</tr>';
+				}
+				
+				
+				//xwhtml.append(chircont[j].mod_name);
+				//xwhtml.append(Base64.decode(chircont[j].CONTENT));
+			$("#tbd").append(xwhtml);
+			}
+			//xwhtml+='</tbody></table></div>';
+
+	});
+	function leftLiClick(obj) {
+		$(obj).children("a").css("color", "#0a8a7a");
+		$(obj).siblings("li").children("a").css("color", "#333");
+		$(obj).next("div").css("display", "block");
+		$(obj).siblings("li").next("div").css("display", "none");
+	}
+</script>
+</head>
+<body>
+		<div class="allContent">
+		<%@ include file="/WEB-INF/view/tkcow/titile.jsp"%>
+			 <div class="banner2" >
+        <img src="" >
+    	<div class="bai"></div>
+        
+    </div>
+			<div class="synr1">
+				<div class="main">
+					<div class="left">
+							<%@ include file="/WEB-INF/view/leftmenu/leftmenuIndex.jsp"%>
+						
+					</div>
+
+
+					<div class="right">
+						<div class="rightnr" id = "rightn1">
+						</div>
+						<div style="OVERFLOW: scroll; OVERFLOW-X: hidden; MARGIN-BOTTOM: 18px; width: 633px; *width: 633px; HEIGHT: 1188px; background: url(${rootPath}/static/tkcow/img/dian_line.jpg) left repeat-y;">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tbody id="tbd">
+									
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="synrbottom"></div>
+			</div>
+		<%@ include file="/WEB-INF/view/tkcow/foot.jsp"%>
+		
+			<div id="floatLayer">
+				<%@ include file="/rightLogin.jsp"%>
+			</div>
+
+</body>
+</html>

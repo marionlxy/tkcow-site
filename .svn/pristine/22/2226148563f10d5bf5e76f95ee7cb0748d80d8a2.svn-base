@@ -1,0 +1,191 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<title>泰康之家官方网站</title>
+<meta content="泰康之家,高端养老社区,养老服务,养老医疗" name="keywords"/>
+<meta content="泰康之家官方网站，中国高端养老社区，详细介绍泰康之家养老社区的养老服务、养老医疗。泰康之家致力于打造大规模、全功能、高品质的国际标准医养社区，以医养结合、活力养老、舒适居住为核心，为老人提供全方位的养老生活解决方案。"  name="description"  />
+
+<meta itemprop="operatingSystems" content="Windows,Mac,linux"/> 
+<%@ include file="/include.jsp" %>
+<link href="<%=basePath%>/static/tkcow/css/main.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=basePath%>/static/tkcow/css/banner.css">
+<script src="<%=basePath%>/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script src="<%=basePath%>/static/js/json.min.js"></script>
+<script>
+/**
+ * 初始化页面信息
+ */
+$(document).ready(function(){
+	
+	//初始化首页滑动下拉菜单列表
+	$.ajax({
+		   type: "POST",
+		   datatype : "json",
+	  	   contentType : "application/json; charset=utf-8",
+		   url: "${rootPath}/homepage/queryTwoMenu",
+		   data: "",
+		   success: function(data){
+			var jsonData=JSON.parse(JSON.stringify(data)).menuList;
+			var savaData=JSON.stringify(jsonData);
+			sessionStorage.setItem("jsonData",savaData);
+		   }
+		});
+	
+	
+	
+	//初始化首页九宫格模块信息
+	$.ajax({
+		   type: "POST",
+		   datatype : "json",
+	  	   contentType : "application/json; charset=utf-8",
+		   url: "${rootPath}/homepage/queryHomeModel",
+		   data: "",
+		   success: function(data){
+			var jsonData=JSON.parse(JSON.stringify(data)).jsonParam;
+			var savaData=JSON.stringify(jsonData);
+			sessionStorage.setItem("jsonParam",savaData);
+			var spicObj=eval("("+savaData+")");
+				$("#homeModel").empty();
+				var rows="";
+			if(spicObj.length%3!=0){
+				 rows=spicObj.length/3+1;
+				
+			}else{
+				rows=spicObj.length/3;
+			}
+				 for(var i=0;i<spicObj.length;i++){
+					 		if(i<3){
+							 $("#homeModel").append('<dl>'
+						              +'<dd><a href="<%=basePath%>/'+spicObj[i].AmodUrl+'">'+spicObj[i].AmodName+'</a></dd>'
+						              +'<dt> <div class="sypic">'
+						              +'<a href="<%=basePath%>/'+spicObj[i].AmodUrl+'">'
+						              +'<img src="<%=basePath%>/'+spicObj[i].Bimg+'" width="306" height="210" original="'+spicObj[i].Bimg+'" style="display: block;">'
+// 						              +'<div class="pic"><img src="img/pic1.png" width="20" height="19" original="img/pic1.png" style="display: block;"></div>'
+						              +'<span class="more">'+spicObj[i].Btitle+'</span>'
+						              +'<span class="content_desc">'+spicObj[i].Ccontent+'</span>'
+						            +'</a>'
+						            +'</div>'
+						            +'</dt>'
+						            +'</dl>');
+					 		}
+							if(i>=3 && i<6){
+								$("#homeModel").append('<dl>'
+							              +'<dd><a href="<%=basePath%>/'+spicObj[i].AmodUrl+'">'+spicObj[i].AmodName+'</a></dd>'
+							              +'<dt> <div class="sypic">'
+							              +'<a href="<%=basePath%>/'+spicObj[i].AmodUrl+'">'
+							              +'<img src="'+spicObj[i].Bimg+'" width="306" height="210" original="'+spicObj[i].Bimg+'" style="display: block;">'
+// 							              +'<div class="pic"><img src="img/pic1.png" width="20" height="19" original="img/pic1.png" style="display: block;"></div>'
+							              +'<span class="more" id="more1">'+spicObj[i].Btitle+'</span>'
+							              +'<span class="content_desc" id="zzjs">'+spicObj[i].Ccontent+'</span>'
+							            +'</a>'
+							            +'</div>'
+							            +'</dt>'
+							            +'</dl>');
+							}
+							if(i>=6){
+								 $("#homeModel").append('<dl>'
+							              +'<dd><a href="<%=basePath%>/'+spicObj[i].AmodUrl+'">'+spicObj[i].AmodName+'</a></dd>'
+							              +'<dt> <div class="sypic">'
+							              +'<a href="<%=basePath%>/'+spicObj[i].AmodUrl+'">'
+							              +'<img src="'+spicObj[i].Bimg+'" width="306" height="210" original="'+spicObj[i].Bimg+'" style="display: block;">'
+// 							              +'<div class="pic"><img src="img/pic1.png" width="20" height="19" original="img/pic1.png" style="display: block;"></div>'
+							              +'<span class="more" id="more2">'+spicObj[i].Btitle+'</span>'
+							              +'<span class="content_desc" id="zzjs1">'+spicObj[i].Ccontent+'</span>'
+							            +'</a>'
+							            +'</div>'
+							            +'</dt>'
+							            +'</dl>');
+							}
+
+			 }
+		   }
+		});
+	});
+
+function getHrefStr(obj){
+	var hrefStr=$(obj).attr("original");
+	var hrefLink;
+	if(hrefStr==""&&hrefStr==null&&hrefStr==undefined){
+		hrefLink="#";
+	}else{
+		hrefLink=hrefStr;
+	}
+		window.location.href=hrefLink;
+}	
+
+</script>
+</head>
+<body>
+     <div class="allContent">
+         <%@ include file="/WEB-INF/view/tkcow/titile.jsp"%>
+    <div class="banner">
+        <div class="container">
+            <div id="slides">
+            </div>
+       </div>
+       
+     </div>
+     <div class="syhy">欢迎来到泰康之家！</div>
+     <div class="synrtop"></div>
+     <div class="synr">
+          <div class="synrnei" id="homeModel">
+          </div>
+        </div>
+     <div class="synrbottom"></div>
+  </div>
+  <%@ include file="/WEB-INF/view/tkcow/foot.jsp"%>
+  
+<!-- <div id="windownbg"></div> -->
+
+       <div id="floatLayer"> 
+
+		<%@ include file="/rightLogin.jsp"%>
+            <div style="cursor:pointer; float:right; height:256px; width:62px; overflow:hidden">
+             <img src="<%=basePath%>/static/tkcow/img/a0.jpg" width="62" border="0" onclick="javascript:window.open('http://chat.taikangzhijia.com/');">
+            <img src="<%=basePath%>/static/tkcow/img/a1.jpg" width="62" border="0" id="sqzl_id">
+            
+            <img src="<%=basePath%>/static/tkcow/img/a2.jpg" width="62" border="0" id="yycg_id">
+            
+            <img src="<%=basePath%>/static/tkcow/img/a3.jpg" width="62" border="0" onclick1="javascript:showbox('menzhen');">
+          </div>
+   		</div>
+<script src="<%=basePath%>/static/tkcow/js/jquery.slides.min.js"></script>
+<script>
+$(function() {
+	var WIDTH=$(window).width();
+	$('#slides').slidesjs({
+	width:WIDTH,
+	height:382,
+	start: 1,
+	play: {
+	  auto: true,
+	  swap: true, 
+	  pauseOnHover: true,
+	},
+	navigation:{
+	  active: true,//是否开启左右按钮
+	  
+	},
+	effect: {
+      slide: {
+        // 滑动效果设置.
+        speed: 200
+          // [number] 速度以毫秒为单位的幻灯片动画。
+      	}
+	  }
+  }); 
+	
+	
+ 
+	
+});
+
+</script>
+	</body>
+</html>

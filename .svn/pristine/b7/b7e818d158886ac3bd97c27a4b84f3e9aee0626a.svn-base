@@ -1,0 +1,131 @@
+    #slides{
+      display: none;
+      margin-bottom:50px;
+    } 
+	a.slidesjs-next{
+		 background-image: url(../img/rightb.png);
+		  background-repeat: no-repeat;
+		  display:block;
+		  width:47px;
+		  height:81px;
+		  overflow: hidden;
+		  text-indent: -9999px;
+		  float: left;
+		  margin-right:0px;
+		  position: absolute;
+		  top: 150px;
+		  right: 0%;
+		  display: block;
+		  z-index: 101;
+		}
+    a.slidesjs-previous{
+      background-image: url(../img/leftb.png);
+      background-repeat: no-repeat;
+      display:block;
+      width:47px;
+      height:81px;
+      overflow: hidden;
+      text-indent: -9999px;
+      float: left;
+      margin-right:5px;
+	  position: absolute;
+	  top: 150px;
+	  left: 0%;
+	  display: block;
+	  z-index: 101;
+    }
+	 a.slidesjs-play,
+     a.slidesjs-stop{}
+    .slidesjs-navigation {
+      margin-top:3px;
+    }
+
+    .slidesjs-previous {
+      margin-right: 5px;
+      float: left;
+    }
+
+    .slidesjs-next {
+      margin-right: 5px;
+      float: left;
+    }
+	
+	.slidesjs-pagination {
+      margin: 6px;
+      float: right;
+      list-style: none;
+	  margin-right:50%;
+	  position:relative;
+	  margin-top:-25px;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 15px;
+      height: 5px;
+      padding-top: 5px;
+      /*background:url('../images/banner_03.png') no-repeat;*/
+	  overflow:hidden;
+	  background-position: -40px 0px  
+    }
+	 .sliderw .slidesjs-pagination li a{
+		  background-position: 0px 0px 
+		 }
+    .slidesjs-pagination li a.active,
+	.slidesjs-pagination li a:hover.active {background-position: -20px 0px}
+
+    .slidesjs-pagination li a:hover {background-position: -20px 0px}
+
+    /*a:link,
+    a:visited {
+      color: #333
+    }*/
+
+   /* a:hover,
+    a:active {
+      color: #9e2020
+    }*/
+
+    .navbar {
+      overflow: hidden
+    }
+	
+    .container {
+      margin: 0 auto;
+    }
+
+    /* For tablets & smart phones */
+    @media (max-width: 767px) {
+      body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .container {
+        width: auto
+      }
+    }
+
+    /* For smartphones */
+    @media (max-width: 480px) {
+      .container {
+        width: auto;
+      }
+    }
+
+    /* For smaller displays like laptops */
+    @media (min-width: 768px) and (max-width: 979px) {
+      .container {
+        width: auto;
+      }
+    }
+
+    /* For larger displays */
+    @media (min-width: 1200px) {
+      .container {
+        width:auto;
+      }
+    }

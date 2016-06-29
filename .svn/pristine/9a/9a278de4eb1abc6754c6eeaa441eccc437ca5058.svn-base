@@ -1,0 +1,138 @@
+    #slides1{
+      display: none;
+      margin-bottom:50px;
+    }
+	a.slidesjs-next{
+		 background-image: url(../img/bt_next.jpg);
+		  background-repeat: no-repeat;
+		  display:block;
+		  width:33px;
+		  height:174px;
+		  overflow: hidden;
+		  text-indent: -9999px;
+		  float: left;
+		  margin-right:0px;
+		  position: absolute;
+		  top: 200px;
+		  display: block;
+		  z-index: 101;
+		      margin-top: -200px;
+    margin-left: 564px;
+		}
+    a.slidesjs-previous{
+      background-image: url(../img/bt_prev.jpg);
+      background-repeat: no-repeat;
+      display:block;
+      width:33px;
+      height:174px;
+      overflow: hidden;
+      text-indent: -9999px;
+      float: left;
+      margin-right:5px;
+	  position: absolute;
+	  top: 150px;
+	  z-index: 101;
+		  margin-top:-150px;
+    }
+	 a.slidesjs-play,
+     a.slidesjs-stop{}
+    .slidesjs-navigation {
+      margin-top:3px;
+    }
+
+    .slidesjs-previous {
+      margin-right: 5px;
+      float: left;
+    }
+
+    .slidesjs-next {
+      margin-right: 5px;
+      float: left;
+    }
+	
+	.slidesjs-pagination {
+      margin: 6px;
+      float: right;
+      list-style: none;
+	  margin-right:50%;
+	  position:relative;
+	  margin-top:-25px;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 15px;
+      height: 5px;
+      padding-top: 5px;
+      /*background:url('../images/banner_03.png') no-repeat;*/
+	  overflow:hidden;
+	  background-position: -40px 0px  
+    }
+	 .sliderw .slidesjs-pagination li a{
+		  background-position: 0px 0px 
+		 }
+    .slidesjs-pagination li a.active,
+	.slidesjs-pagination li a:hover.active {background-position: -20px 0px}
+
+    .slidesjs-pagination li a:hover {background-position: -20px 0px}
+
+    /*a:link,
+    a:visited {
+      color: #333
+    }*/
+
+   /* a:hover,
+    a:active {
+      color: #9e2020
+    }*/
+
+    .navbar {
+      overflow: hidden
+    }
+	
+    .container {
+      margin: 0 auto;
+	  width:564px;
+	  height:174px;
+	  white-space:nowrap;
+    }
+
+    /* For tablets & smart phones */
+    @media (max-width: 767px) {
+      body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .container {
+        width:auto;
+		height:auto;
+      }
+    }
+
+    /* For smartphones */
+    @media (max-width: 480px) {
+      .container {
+        width:auto;
+		height:auto;
+      }
+    }
+
+    /* For smaller displays like laptops */
+    @media (min-width: 768px) and (max-width: 979px) {
+      .container {
+        width:564px;
+	  	height:174px;
+      }
+    }
+
+    /* For larger displays */
+    @media (min-width: 1200px) {
+      .container {
+        width:564px;
+		height:174px;
+      }
+    }

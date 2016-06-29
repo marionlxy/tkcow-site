@@ -1,0 +1,266 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/pagess" prefix="page" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>泰康之家官方网站</title>
+<meta content="泰康之家,高端养老社区,养老服务,养老医疗" name="keywords"/>
+<meta content="泰康之家官方网站，中国高端养老社区，详细介绍泰康之家养老社区的养老服务、养老医疗。泰康之家致力于打造大规模、全功能、高品质的国际标准医养社区，以医养结合、活力养老、舒适居住为核心，为老人提供全方位的养老生活解决方案。"  name="description"  />
+
+<meta itemprop="operatingSystems" content="Windows,Mac,linux"/> 
+<%@ include file="/include.jsp" %>
+<link href="<%=basePath%>/static/tkcow/css/main.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=basePath%>/static/tkcow/css/banner.css">
+<script src="<%=basePath%>/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script src="<%=basePath%>/static/tkcow/js/tkcontent.js"></script>
+<link href="<%=basePath%>/static/tkcow/css/page.css" rel="stylesheet">
+<%-- <style>
+.xmly li {
+    width: 306px;
+    height: 211px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+    margin-right: 26px;
+    margin-bottom: 36px;
+    display: inline;
+}
+.xmly li .hzgy {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 306px;
+    height: 37px;
+    line-height: 37px;
+    background: url(<%=basePath%>/static/tkcow/img/xmbg.png);
+    padding-left: 15px;
+    color: #FFF;
+}
+#xmlyjd {
+    margin-right: 0px;
+}
+a img:hover {
+    FILTER: alpha(opacity=60);
+    -moz-opacity: 0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+}
+
+.white_content {
+	position:fixed;
+	margin:0 auto;
+    font-size: 15px;
+    width: 50%;
+    background-color: white;
+    border: 10px solid #ccc;
+    padding: 0px 10px;
+	display:none;
+	top:15%;
+	left:25%;
+	z-index: 999902;
+	height:50%;
+}
+
+</style> --%>
+
+<script>
+$(function(){
+	var banUrl = '<%=basePath%>' + '/' + '${banUrl}';
+	//var cs = "url('" + banUrl + "') no-repeat";
+	$(".banner2").find("img").attr("src",banUrl);
+	
+	var id = '${id}' ;
+	var modName='${modName}';
+	var listimg = ${listimg};
+	sessionStorage.setItem("listimg",JSON.stringify(listimg));
+	$(".content_main li").hover(function(){
+		$(this).find("ul").show();
+		$(this).find("span").css("background","url(${rootPath}/static/tkcow/img/a2.png)  center center no-repeat");
+		},function(){
+			$(this).find("ul").hide();
+			$(this).find("span").css("background","url(${rootPath}/static/tkcow/img/a1.png)  center center no-repeat");
+			});
+	
+	var pageItems = sessionStorage.getItem("listimg");
+	var pItems=JSON.parse(pageItems);
+	$(".right").empty();
+	$(".white_content").empty();
+	var imglist;
+	var indexhtml='<div class="righttitle">'+modName;
+	var kk = pItems.menuList.length;
+	for (var i = 0; i < kk; i++) {
+		//indexhtml+=pItems.menuList[i].modName;
+		imglist=pItems.menuList[i].imglists;
+	}
+				indexhtml+="</div><div class='rightnr'>"
+				  +'<div class="xmly">'
+				  +'<ul>';
+				  console.log(imglist)
+				  for (var j = 0;  j< imglist.length; j++) {
+						var mId = imglist[j].MOD_ID;
+						var mImgUrl = '<%=basePath%>' + '/' +imglist[j].MOD_IMG;
+						var indeximgchtml="";
+					  if (j % 2 != 0 ) {
+						  indexhtml +="<li onclick=\"window_ceng(\'"+mId+"\')\" id=\"xmlyjd\">"
+						  +"<a href='javascript:void(0);'>"
+						  +"<img src=" +mImgUrl+" width='306' height='211' original="+mImgUrl+">"
+						  +"<div class='hzgy'>"+imglist[j].modpas_name+"</div></a></li>"
+						  
+						}else{
+							indexhtml +="<li onclick=\"window_ceng(\'"+mId+"\')\">"
+						  +"<a href='javascript:void(0);'>"
+						  +"<img src=" +mImgUrl+" width='306' height='211' original="+mImgUrl+">"
+						  +"<div class='hzgy'>"+imglist[j].modpas_name+"</div></a></li>"
+						  
+						}
+					  
+						  indeximgchtml = '<div id="wind'+imglist[j].MOD_ID+'"><div class="white_content"><table width="660" style="margin-left:50px;" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="right" height="60" valign="bottom"><a href="javascript:void(0)" onclick="closeWindown()"><img src="${rootPath}/static/tkcow/img/gb.jpg"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></tbody></table><table width="561" style="margin-left:50px;" border="0" cellspacing="0" cellpadding="0">'
+						  +'<tbody><tr><td height="10" colspan="2" align="left"></td><td width="529" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr>';
+						  indeximgchtml+='<td style="font-size:16px; font-weight:bold; padding-top:10px;padding-bottom:10px;">'+imglist[j].modpas_name+'</td></tr>'
+						  +'<tr><td style="font-size:14px;word-break:break-all;overflow:auto;">'+Base64.decode(Base64.decode(imglist[j].content))+'</td></tr>';
+						  indeximgchtml+='</tbody></table></td></tr></tbody></table></div></div>';
+					$("#windows").append(indeximgchtml);
+				}
+					 
+				  indexhtml+='</ul>'
+				  +'</div>'
+				  +'</div>';
+	$(".right").append(indexhtml);
+});
+function leftLiClick(obj){
+	$(obj).children("a").css("color","#21acd8");
+	$(obj).siblings("li").children("a").css("color","#333");
+	$(obj).next("div").css("display","block");
+	$(obj).siblings("li").next("div").css("display","none");
+	var divLen=$(obj).next("div").find("div").length;
+	if(divLen>0){
+		$(obj).next("div").find("div").css("display","block");
+		}
+	
+	}
+function left_change(obj){
+	$(obj).children("a").css("color","#21acd8");
+	$(obj).siblings("li").children("a").css("color","#333");
+	var divLen=$(obj).next("div").length;
+	if(divLen==0){
+		$(obj).siblings("li").next("div").css("display","none");
+		}
+	
+	var pageItems = sessionStorage.getItem("listimg");
+	var pItems=JSON.parse(pageItems);
+	$(".right").empty();
+	$(".white_content").empty();
+	var imglist;
+	var indexhtml='<div class="righttitle">';
+	var indeximgchtml = '<div id="wind'+pItems.menuList.length+'"><table width="660" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="right" height="60" valign="bottom"><a href="javascript:void(0)" onclick="closeWindown()"><img src="${rootPath}/static/tkcow/img/gb.jpg"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></tbody></table><table width="561" border="0" cellspacing="0" cellpadding="0">'
+		+'<tbody><tr><td height="10" colspan="2" align="left"></td><td width="529" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr>';
+	var kk = pItems.menuList.length;
+	for (var i = 0; i < kk; i++) {
+		//indexhtml+=pItems.menuList[i].modName;
+		imglist=pItems.menuList[i].imglists;
+	}
+				indexhtml+='</div><div class="rightnr">'
+				  +'<div class="xmly">'
+				  +'<ul>';
+				  for (var j = 0;  j< imglist.length; j++) {
+					  indexhtml+='<li onclick="window_ceng(this)">'
+						  +'<a href="javascript:void(0);" onclick="javascript:showbox_xmly();">'
+						  +'<img src='+imglist[j].MOD_IMG+' width="306" height="211" original='+imglist[j].MOD_IMG+'>'
+						  +'<div class="hzgy">'+imglist[j].modpas_name+'</div></a></li>';
+						  
+					  indeximgchtml+='<td style="font-size:16px; font-weight:bold; padding:10px;">'+imglist[j].modpas_name+'</td></tr>'
+					  +'<tr><td style="font-size:14px;">'+Base64.decode(Base64.decode(imglist[j].content))+'</td></tr>'
+					  }
+					 
+				  indexhtml+='</ul>'
+				  +'</div>'
+				  +'</div>';
+				  indeximgchtml+='</tbody></table></td></tr></tbody></table></div>';
+	$(".right").append(indexhtml);
+	$(".white_content").append(indeximgchtml);
+	
+						
+	}
+function chil_change(obj){
+	$(obj).children("a").css("color","#21acd8");
+	$(obj).siblings("li").children("a").css("color","#333");
+	}
+function window_ceng(obj){
+	$("#windownbg").css("display","block");
+	$("#wind"+obj).children(".white_content").css("display","block");
+	}
+function closeWindown(){
+	$("#windownbg").css("display","none");
+	$(".white_content").css("display","none");
+}
+
+</script>
+</head>
+<body>
+
+
+     <div class="allContent">
+       <%@ include file="/WEB-INF/view/tkcow/titile.jsp"%>
+        
+    <div class="banner2" >
+        <img src="" >
+    	<div class="bai"></div>
+        
+    </div>
+     <div class="synr1">
+        <div class="main">
+        <div class="left">
+      
+        	<%@ include file="/WEB-INF/view/leftmenu/leftmenuIndex.jsp"%>
+          </div>
+          
+                    
+             <div class="right">           </div>
+          <div style="width: 638px;float: right;">
+          <form action="" id="form4">
+	     		<input id="pageNo" type="hidden" value="${pageBean.pageNo}" name="pageNo">
+	     		<div class="quotes">
+	     			 <page:page pageBean="${pageBean}" targetPage="" formId="form4"></page:page>
+				</div>	
+		   	</form>
+          
+          </div>
+            
+           
+            
+             <style>
+#page{clear:both;  height:49px;text-align:center; }
+#page a{ cursor:pointer; display:inline-block; width:30px; font-size:12px;}
+ 
+#page .lr span,#page .thispage span{width:22px; height:20px;background:#777777;border:1px solid #777777;line-height:19px; text-align:center; display:block; float:left; margin-right:10px;  color:#ffffff;  margin:auto}
+#page .nopage span{  width:22px; height:20px;line-height:19px;  text-align:center; display:block; float:left; margin-right:10px;border:1px solid #0C308E;margin:auto}
+</style>
+          </div>
+        </div> 
+                     
+                  
+           </div>
+        </div>
+
+
+     <div class="synrbottom"></div>
+  </div>
+  	
+  
+<%@ include file="/WEB-INF/view/tkcow/foot.jsp"%>
+<div id="windownbg"></div>
+<div id="windows">
+
+
+</div>
+
+
+       <div id="floatLayer"> 
+<%@ include file="/rightLogin.jsp"%>
+   		</div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+package com.taikang.tkcow.moduleContent.action.impl;
+
+
+import com.taikang.udp.framework.common.datastructre.impl.BaseDto;
+import com.taikang.tkcow.moduleContent.action.IModuleContentAction;
+
+import javax.annotation.Resource;
+
+import com.taikang.tkcow.moduleContent.service.IModuleContentService;
+import com.taikang.tkcow.moduleContent.model.ModuleContentBO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.taikang.udp.framework.core.action.impl.BaseActionImpl;
+import com.taikang.udp.framework.core.persistence.pagination.CurrentPage;
+
+import java.util.Arrays;
+
+import com.taikang.udp.framework.common.datastructre.Dto;
+
+import org.baitanw.maomao.utils.PageBean;
+import org.springframework.stereotype.Service;
+
+/**
+  * ModuleContentAction
+  */
+  @Service(IModuleContentAction.ACTION_ID)
+public class ModuleContentActionImpl extends BaseActionImpl 
+  implements IModuleContentAction {
+
+    /**
+      * 注入service
+      */
+    @Resource(name=IModuleContentService.SERVICE_ID)
+	private IModuleContentService<ModuleContentBO> moduleContentService;	
+	
+	/**
+	  * 增加数据
+	  */
+	public void insertObject(Dto param) {
+		logger.debug("<======ModuleContentAction--addModuleContent======>");
+		
+		ModuleContentBO moduleContentBO = BaseDto.toModel(ModuleContentBO.class , param);
+		moduleContentService.insertObject(moduleContentBO);
+	}
+	
+	/**
+      * 修改数据
+      */
+	public void updateObject(Dto param){
+		logger.debug("<======ModuleContentAction--updateModuleContent======>");
+		
+		ModuleContentBO moduleContentBO = BaseDto.toModel(ModuleContentBO.class , param);
+		moduleContentService.updateObject(moduleContentBO);
+	}
+
+	 /**
+      * 删除数据
+      */
+	public void deleteObject(Dto param) {
+		logger.debug("<======ModuleContentAction--deleteModuleContent======>");
+		
+		ModuleContentBO moduleContentBO = BaseDto.toModel(ModuleContentBO.class , param);
+		moduleContentService.deleteObject(moduleContentBO);
+	}
+	
+	/**
+      * 查询单条数据
+      */
+	public Dto findOne(Dto param) {
+		logger.debug("<======ModuleContentAction--findOneModuleContent======>");
+		
+		ModuleContentBO moduleContentBO = BaseDto.toModel(ModuleContentBO.class , param);
+		return moduleContentService.findOne(moduleContentBO).toDto();//返回的BO对象自动转换成Dto返回
+	}  
+	
+	/**
+      * 查询所有数据
+      */
+	public List<Dto> findAll(Dto param) {
+		logger.debug("<======ModuleContentAction--findAllModuleContent======>");
+				
+		return moduleContentService.findAllMap(param);
+	} 
+	
+		
+	 /**
+      * 分页查询数据
+      */
+	public CurrentPage queryForPage(CurrentPage currentPage){
+		logger.debug("<======ModuleContentAction--queryModuleContentForPage======>");
+		
+		return moduleContentService.queryForPage(currentPage);
+	}
+
+	/**
+	 * 查询单条数据内容
+	 */
+	public Dto findzjowModuleconOne(Dto param) {
+		logger.debug("<======ModuleContentAction--findzjowModuleconOne======>");
+		Dto d = moduleContentService.findzjowModuleconOne(param);
+		byte[] by = (byte[])d.get("content");
+		String str = null;
+		if(by==null){
+			str=null;
+		}else{
+			
+			str = new String(by);
+		}
+		Dto map = new BaseDto();
+		map.put("contentst", str);
+		return map;
+	}
+
+	/**
+	 * 查询所有内容节点
+	 */
+	public List<Dto> findzjowModulecont(Dto param) {
+		logger.debug("<======ModuleContentAction--findzjowModulecont======>");
+		List<Dto> dt =moduleContentService.findzjowModulecont(param);
+		Dto dto = new BaseDto();
+		System.out.println(dt);
+		dto.put("url", "tkcontent/huoliyl");
+		dto.put("contlist", dt);
+		List<Dto> list = new ArrayList<Dto>();
+		list.add(dto);
+		return list;
+	}
+
+	/**
+	 * 查询所有新闻事件
+	 */
+	public List<Dto> findzjowModulexwsj(Dto param) {
+		logger.debug("<======ModuleContentAction--findzjowModulexwsj======>");
+		List<Dto> dt =moduleContentService.findzjowModulexwsj(param);
+		Dto dto = new BaseDto();
+		String mod_name=null;
+		System.out.println(dt);
+		for (int i = 0; i < dt.size(); i++) {
+			mod_name = (String) dt.get(0).get("mod_name");
+		}
+		dto.put("url", "tkcontent/xwshj");
+		dto.put("xwlist", dt);
+		dto.put("mod_name", mod_name);
+		dto.put("size", dt.size());
+		List<Dto> list = new ArrayList<Dto>();
+		list.add(dto);
+		return list;
+	}
+
+	/**
+	 * 查询单个新闻详细内容
+	 */
+	public Dto findxwOne(Dto param) {
+		logger.debug("<======ModuleContentAction--findxwOne======>");
+		Dto dt = moduleContentService.findxwOne(param);
+		System.out.println(dt);
+		Dto map = new BaseDto();
+		map.put("xwdes", dt);
+		map.put("url","tkcontent/xwshtext");
+		return map;
+	}
+
+	/**
+	 * 查询上一篇和下一篇内容
+	 */
+	public Dto findupxwOne(Dto param) {
+		logger.debug("<======ModuleContentAction--findupxwOne======>");
+		Dto udt = moduleContentService.findupxwOne(param);
+		Dto dt = moduleContentService.finddoxwOne(param);
+		Dto map = new BaseDto();
+		map.put("xwup", udt);
+		map.put("xwdo", dt);
+		map.put("url","tkcontent/xwshtext");
+		return map;
+	}
+
+	/**
+	 * 查询下一篇内容 暂时不用
+	 */
+	public Dto finddoxwOne(Dto param) {
+		logger.debug("<======ModuleContentAction--finddoxwOne======>");
+		Dto dt = moduleContentService.finddoxwOne(param);
+		Dto map = new BaseDto();
+		map.put("xwdow", dt);
+		map.put("url","tkcontent/xwshtext");
+		return map;
+	}
+
+	/**
+	 * 分页查询新闻列表
+	 */
+	public List<Dto> findzjowModulexwsjpage(Dto param) {
+		logger.debug("<======ModuleContentAction--findzjowModulexwsjpage======>");
+		
+		List<Dto> dt =moduleContentService.findzjowModulexwsjpage(param);
+		Dto dto = new BaseDto();
+		String mod_name=null;
+		System.out.println(dt);
+		for (int i = 0; i < dt.size(); i++) {
+			mod_name = (String) dt.get(0).get("mod_name");
+		}
+		dto.put("url", "tkcontent/xwshj");
+		dto.put("xwlist", dt);
+		dto.put("mod_name", mod_name);
+		List<Dto> list = new ArrayList<Dto>();
+		list.add(dto);
+		return list;
+	}
+
+	/**
+ 	 * 查询关于我们父节点内容(类型为07)
+ 	 * @param param
+ 	 * @return
+ 	 */
+	public Dto findparOne(Dto param) {
+		logger.debug("<======ModuleContentAction--findparOne======>");
+		Dto dt = moduleContentService.findparOne(param);
+		Dto map = new BaseDto();
+		map.put("parcont", dt);
+		map.put("url","tkcontent/fzhlch");
+		return map;
+	}
+
+	/**
+ 	 * 查询关于我们子节点内容(类型为07)
+ 	 * @param param
+ 	 * @return
+ 	 */
+	public List<Dto> findchilrOne(Dto param) {
+		logger.debug("<======ModuleContentAction--findchilrOne======>");
+		List<Dto> dt= moduleContentService.findchilrOne(param);
+		Dto map = new BaseDto();
+		map.put("chilrcont", dt);
+		List<Dto> list = new ArrayList<Dto>();
+		list.add(map);
+		return list;
+	}	
+}

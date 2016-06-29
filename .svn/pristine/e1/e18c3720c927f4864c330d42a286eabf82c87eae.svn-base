@@ -1,0 +1,198 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%
+String url = request.getContextPath();
+String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+url;
+%>
+
+<c:set var="url" value="<%=url%>"></c:set>
+<c:set var="path" value="<%=path%>"></c:set>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script>
+/**
+ * 初始化页面信息
+ */
+$(document).ready(function(){
+	//加载首页banner列表
+	$.ajax({
+		   type: "POST",
+		   datatype : "json",
+	  	   contentType : "application/json; charset=utf-8",
+		   url: "${rootPath}/homepage/queryBanner",
+		   data: "",
+		   async:false,
+		   success: function(data){
+//  			alert(JSON.stringify(data));
+			var jsonBanner=JSON.parse(JSON.stringify(data)).bannerData;
+			//alert("长度==="+jsonBanner.length+"text==="+jsonBanner);
+			console.log(jsonBanner);
+			for(var i=0;i<jsonBanner.length;i++){
+				$("#slides").append('<img src="' + jsonBanner[i].BAN_IMG_URL + '" onclick="getHrefStr(this)" original='+jsonBanner[i].BAN_IMG_OUTSIDE+'>');
+			}
+		   }
+		});
+	
+		//初始化首页滑动下拉一级菜单列表
+		$.ajax({
+			   type: "POST",
+			   datatype : "json",
+		  	   contentType : "application/json; charset=utf-8",
+			   url: "${rootPath}/homepage/queryOneMenu",
+			   data: "",
+			   success: function(data){
+ 	  			console.log(JSON.stringify(data));
+				var jsonData=JSON.parse(JSON.stringify(data)).menuList;
+				$("#quanguobuju").html("全国布局").attr("href","<%=path%>/"+jsonData[0].MOD_URL);
+				$("#hlyl_id").html(jsonData[0].MOD_NAME).attr("href","<%=path%>/"+jsonData[0].MOD_URL);
+				$("#gdyl_id").html(jsonData[1].MOD_NAME).attr("href","<%=path%>" + "/" +jsonData[1].MOD_URL);
+				$("#qysq_id").html(jsonData[2].MOD_NAME).attr("href","<%=path%>" + "/" +jsonData[2].MOD_URL);
+				$("#gywm_id").html(jsonData[3].MOD_NAME).attr("href","<%=path%>" + "/" +jsonData[3].MOD_URL);
+			   }
+			});	
+		
+	
+	//初始化首页滑动下拉菜单列表
+	$.ajax({
+		   type: "POST",
+		   datatype : "json",
+	  	   contentType : "application/json; charset=utf-8",
+		   url: "${rootPath}/homepage/queryTwoMenu",
+		   data: "",
+		   success: function(data){
+//   			alert(JSON.stringify(data));
+			var jsonData=JSON.parse(JSON.stringify(data)).menuList;
+			var savaData=JSON.stringify(jsonData);
+			sessionStorage.setItem("jsonData",savaData);
+		   }
+		});
+
+	});
+	
+		
+
+	
+
+$(function(){
+	$(".content_main li").hover(function(){
+		$(this).find("ul").show();
+		$(this).find("span").css("background","url(img/a2.png)  center center no-repeat");
+		var flagStr=$(this).find("a").html();
+
+			var data = sessionStorage.getItem("jsonData");
+			var json=JSON.parse(data);
+			$("#hlyl_main_id").empty();
+			$("#gdyl_main_id").empty();
+			$("#qysq_main_id").empty();
+			$("#gywm_main_id").empty(); 
+			for(var i=0;i<json.length;i++){
+				if(json[i].MOD_PARENT_ID=="10100201"){
+					$("#hlyl_main_id").append('<li><a href="<%=path%>/'+json[i].MOD_URL+'">'+json[i].MOD_NAME+'</a></li>')
+				}else if(json[i].MOD_PARENT_ID=="10100203"){
+					$("#gdyl_main_id").append('<li><a href="<%=path%>/'+json[i].MOD_URL+'">'+json[i].MOD_NAME+'</a></li>')
+				}else if(json[i].MOD_PARENT_ID=="10100205"){
+					$("#qysq_main_id").append('<li><a href="<%=path%>/'+json[i].MOD_URL+'">'+json[i].MOD_NAME+'</a></li>')
+				}else if(json[i].MOD_PARENT_ID=="10100207"){
+					$("#gywm_main_id").append('<li><a href="<%=path%>/'+json[i].MOD_URL+'">'+json[i].MOD_NAME+'</a></li>')
+				}
+			}
+		
+		},function(){
+			$(this).find("ul").hide();
+			$(this).find("span").css("background","url(img/a1.png)  center center no-repeat");
+			});
+	$("#sqzl_id").click(function(){
+		$("#windownbg").css("display","block");
+		$(".white_content_sqzl").css("display","block");
+		});
+	$("#sqzl_gb_id").click(function(){
+		$("#windownbg").css("display","none");
+		$(".white_content_sqzl").css("display","none");
+		});
+	$("#yycg_id").click(function(){
+		$("#windownbg").css("display","block");
+		$(".white_content_yycg").css("display","block");
+		});
+	$("#yycg_gb_id").click(function(){
+		$("#windownbg").css("display","none");
+		$(".white_content_yycg").css("display","none");
+		});
+	
+});
+	
+</script>
+</head>
+<body>
+         <div class="content_top">
+            <div class="content_logo">
+                <a href="index.htm">
+                <img src="${rootPath}/static/tkcow/img/logo.jpg" width="203" height="56" title="泰康之家官方网站" original="${rootPath}/index.htm">
+                </a>
+            </div>
+            <div class="headright">
+               <div class="content_Topimg"> 
+                    <ul>
+                       <li class="t1"><a href="index.html">泰康之家</a></li> 
+                       <li class="t2"><a href="#" id="quanguobuju">全国布局</a></li> 
+                       <li class="t3"><a href="#">微信帐号</a><span></span></li> 
+<%--                        <li class="t4"><a href="${rootPath}/user/login"> 会员登录</a></li>  --%>
+                    </ul>
+                </div>
+              <div class="content_tel">40060-95522</div>
+            </div>
+        </div>
+        
+                <div class="content_main">
+            <div class="content_main983">
+                <ul id="oneMenu">                   
+                <li class="topnav">
+                    <a href="${rootPath}/moduleDes/contentfindOne?modid=10100201&modType=01" id="hlyl_id"></a>
+                    <span style="background-image:url(img/a1.png); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"></span>
+                <ul style="display: none;" id="hlyl_main_id">          
+                 </ul>
+              </li>                    
+              <li class="topnav">
+                 <a href="${rootPath}/moduleDes/contentfindOne?modid=10100203&modType=01" id="gdyl_id"></a>
+                 <span style="background-image: url(img/a1.png); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"></span>
+                <ul style="display: none;" id="gdyl_main_id">
+<!--                     <li><a href="#">国际综合医院</a></li> -->
+<!--                     <li><a href="#">康复医疗连锁</a></li> -->
+<!--                     <li><a href="#">高端名医诊所</a></li> -->
+<!--                     <li><a href="#">全球医疗直通</a></li> -->
+<!--                     <li><a href="#">全程健康管理</a></li>                -->
+                </ul>
+             </li>                    
+             <li class="topnav">
+             <a href="${rootPath}/moduleDes/contentfindOne?modid=10100205&modType=01" id="qysq_id"></a>
+             <span style="background-image: url(img/a1.png); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"></span>
+             <ul style="display: none;" id="qysq_main_id">
+<!--                 <li><a href="#">泰康企业社区</a></li> -->
+<!--                 <li><a href="#">企业管家服务</a></li> -->
+<!--                 <li><a href="#">员工生活服务</a></li> -->
+<!--                 <li><a href="#">租赁垂询</a></li>                -->
+                </ul>
+            </li>                    
+            <li class="topnav">
+          <a href="${rootPath}/moduleDes/getgywm?modid=10100207&modType=07" id="gywm_id"></a><span style="background-image: url(img/a1.png); background-position: 50% 50%; background-repeat: no-repeat no-repeat;"></span>
+             <ul style="display: none;" id="gywm_main_id">
+<!--                 <li><a href="#">关于泰康之家</a></li> -->
+<!--                 <li><a href="#">发展历程</a></li> -->
+<!--                 <li><a href="#">企业荣誉</a></li> -->
+<!--                 <li><a href="#">加入我们</a></li> -->
+<!--                 <li><a href="#">联系我们</a></li>                -->
+                </ul>
+            </li>                                                                                     
+           <li class="searchbg">
+                <form id="form1" name="form1" method="post" action="${rootPath}/homepage/toPage">
+                    <input name="skey" id="skey" type="text" class="search_text" style="height:18px; margin-top:13px; margin-left:10px; border:0px; line-height:20px" id="skey">
+                    <input type="submit" value="" class="search_submit">
+                </form>
+                <!--Powered by MINETHINK -->
+                <!--www.minethink.com -->
+            </li>
+           </ul>
+        </div>
+   </div>
+</body>
+</html>

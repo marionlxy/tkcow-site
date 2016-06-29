@@ -1,0 +1,276 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="泰康之家,高端养老社区,养老服务,养老医疗" name="keywords"/>
+<meta content="泰康之家官方网站，中国高端养老社区，详细介绍泰康之家养老社区的养老服务、养老医疗。泰康之家致力于打造大规模、全功能、高品质的国际标准医养社区，以医养结合、活力养老、舒适居住为核心，为老人提供全方位的养老生活解决方案。"  name="description"  />
+<title>泰康之家官方网站</title>
+<%@ include file="/include.jsp" %>
+<link href="<%=basePath%>/static/tkcow/css/main.css" rel="stylesheet" />
+<link href="<%=basePath%>/static/tkcow/css/banner.css" rel="stylesheet">
+<script src="<%=basePath%>/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script>
+$(function(){
+	$(".content_main li").hover(function(){
+		$(this).find("ul").show();
+		$(this).find("span").css("background","url(img/a2.png)  center center no-repeat");
+		},function(){
+			$(this).find("ul").hide();
+			$(this).find("span").css("background","url(img/a1.png)  center center no-repeat");
+			});
+	$("#sqzl_id").click(function(){
+		$("#windownbg").css("display","block");
+		$(".white_content_sqzl").css("display","block");
+		});
+	$("#sqzl_gb_id").click(function(){
+		$("#windownbg").css("display","none");
+		$(".white_content_sqzl").css("display","none");
+		});
+	$("#yycg_id").click(function(){
+		$("#windownbg").css("display","block");
+		$(".white_content_yycg").css("display","block");
+		});
+	$("#yycg_gb_id").click(function(){
+		$("#windownbg").css("display","none");
+		$(".white_content_yycg").css("display","none");
+		});
+	
+});
+function leftLiClick(obj){
+	$(obj).children("a").css("color","#0a8a7a");
+	$(obj).siblings("li").children("a").css("color","#333");
+	$(obj).next("div").css("display","block");
+	$(obj).siblings("li").next("div").css("display","none");
+	$.post("${rootPath}/zjowModuleContent/list",function(data){
+		if(data==0){
+			//$("#goodsForm").submit();
+			return true;
+        }else{
+		 	
+		 	return false;
+		 	}
+	});
+	}
+</script>
+</head>
+<body>
+     <div class="allContent">
+      <%@ include file="/WEB-INF/view/tkcow/titile.jsp"%>
+    <div class="banner2" style="background:url(img/gywm.jpg);background-repeat: no-repeat;
+        background-position: center top;height:365px;" >
+     
+    	<div class="bai"></div>
+    </div>
+     <div class="synr1">
+        <div class="main">
+        <div class="left">
+        <div class="ltitle"  style=' color:#21acd8' >| <a href="#" style=' color:#21acd8'>首页</a></div>
+        <div class="leftdh"> 
+                   <ul>
+                      <li class="no"></li>  
+                      <li onclick="leftLiClick(this)"><a href="#" style="color:#21acd8"  title="法律声明">法律声明</a></li>
+             		  <div style="display:none;">
+                      </div>
+                      <li onclick="leftLiClick(this)"><a href="#" title="常见问题">常见问题</a></li>
+                      <div style="display:none;"> 	
+                      </div>
+                      <li onclick="leftLiClick(this)"><a href="#" title="招聘信息">招聘信息</a></li>
+                      	<div style="display:none;">
+                        	
+                        </div>
+                      
+                    </ul>
+               </div>
+          </div>
+          
+                    
+          <div class="right">
+              <div class="righttitle">法律声明</div>
+                  <div class="rightnr">
+                    <p>在使用本网站之前，请您仔细阅读本法律声明的下述条款。您对本网站的任何使用即视为同意接受下列各条款之约束。若您不同意接受下列各条款，则请勿对本网站进行任何形式的使用或利用。本法律声明对使用本网站的一切用户（包括浏览本网站及相关网页的普通用户及注册用户）均具有约束力。</p>
+        <p><strong>知识产权声明</strong></p>
+        <p>泰康之家（北京）投资有限公司及其继任者（以下统称为"公司"）是本网站的运营商，拥有对此网站内容及全部资源（包括但不限于文字内容、图片、视频等）包括版权、商标权等在内的各项知识产权，并受国家知识产权法律保护。</p>
+        <p>本网站所刊登的任何内容及资源，均仅限于用户作为信息使用，而不得用于商业或任何其他目的。任何团体与个人，拟在互联网上使用本网站的图、文、视频、音频及其它信息资源，须事先与本网站联络并取得明确的书面许可。任何用户未经本网站的明确书面许可或法律明确许可外，不得进行任何形式的复制、传播、展示、镜像、下载、引用、评述、修改、存储、传送、抄袭、分发等，亦不得对本网站的全部或部分页面、内容进行商业链接，否则公司将依法追究其法律责任。</p>
+        <p><strong>隐私权声明</strong></p>
+        <p>公司重视对用户隐私的保护。用户提供的登记资料及本网站保留的有关用户的若干其它个人资料将受到中国有关隐私的法律和下述《隐私权政策》之规范。</p>
+        <p>用户使用本网站时，本网站有权用数字代码、通用唯一标识符、cookies或其它技术确定进入服务的计算机。本网站有可能利用所得信息对服务的使用进行总体性及匿名的数据统计及分析，所得数据可供本网站或其合作人使用。计算机识别技术也会用于执行相关的服务条款。&nbsp;</p>
+        <p>本网站可能会与第三方合作向用户提供相关的服务，如该第三方为合法经营的公司且提供同等或更高标准的用户隐私保护，本网站有权将用户的注册资料等提供给该第三方。&nbsp;</p>
+        <p><u>您个人信息的搜集</u><strong>&nbsp;</strong></p>
+        <p>在用户注册本网站的账号时，我们会请求用户提供能识别其身份的信息（个人信息）可以与用户联系的信息。本网站搜集的信息通常仅限于您的姓名、性别、年龄、出生日期、家庭住址等。&nbsp;</p>
+        <p>本网站会在法律要求或符合本网站的相关服务条款约定的情况下透露用户的个人信息，或者有充分理由相信必须这样做才能：(a) 满足法律的明文规定，或者符合本网站适用的法律程序；（b）符合本网站相关服务条款、软件许可使用协议的约定；(c) 保护本网站及其系列 Web 站点的权利或财产，以及在紧急情况下保护本网站员工、本网站服务的用户或大众的个人安全。本网站不会未经允许将这些信息与第三方共享，本声明已经列出的情况除外。&nbsp;</p>
+        <p><u>您个人信息的安全</u></p>
+        <p>本网站将严格保护您的个人信息的安全。本网站使用各种安全技术和程序来保护您的个人信息不被未经授权的访问、使用或泄漏。如果用户对本网站的隐私保护有任何置疑，请发送邮件至webmaster@taikangre.com。&nbsp;</p>
+        <p><u>Cookie 的使用</u><strong>&nbsp;</strong></p>
+        <p>本网站使用 Cookie 来帮助用户实现其联机体验的个性化。Cookie 是由网页服务器存放在用户的硬盘中的文本文件。Cookie 不能用来运行程序或将病毒递送到用户的计算机中。指定给用户的 Cookie 是唯一的，它只能由将 Cookie 发布给用户的域中的 Web 服务器读取。Cookie 的主要用途之一是提供一种节约时间的实用功能。例如，如果用户在本网站上注册，Cookie 会帮助本网站在用户后续访问时调用用户的特定信息。这样可以简化记录用户的个人信息的流程。当用户返回到本网站时，本网站可以调出用户以前所提供的信息，使用户能够容易地使用其自定义的网站功能。</p>
+        <p><u>未成年人信息的搜集和使用</u></p>
+        <p>本网站非常重视对青少年个人信息搜集和使用的安全性和保护。本网站建议，任何16岁以下的未成年人参加网上活动应事先取得家长或其法定监护人（以下简称"监护人"）的书面同意。本网站保证不会要求青少年提供额外的个人资料，以作为允许其参与网上活动的条件。&nbsp;</p>
+        <p><u>关于个人信息收集的免责</u></p>
+        <p>就下列相关事宜的发生，公司及本网站不承担任何法律责任： 1、本网站根据法律规定或相关政府部门的要求提供用户的个人信息； 2、由于用户将用户密码告知他人或与他人共享注册帐户，由此导致的任何个人信息的泄漏，或其它非因本网站原因导致的个人信息的泄漏； 3、任何第三方根据本网站各服务条款及声明中所列明的情况使用用户的个人信息，由此所产生的纠纷；4、任何由于黑客攻击、电脑病毒侵入或政府管制而造成的个人信息泄露；5、因不可抗力导致的任何后果；6、本网站在各服务条款及声明中列明的使用方式或免责情形。&nbsp;</p>
+        <p>本网站会不时更新本隐私权政策，并相应更新隐私权政策的发布日期。</p>
+        <p><strong>免责声明</strong></p>
+        <p>本网站内的所有文字描述（包括但不限于说明、服务流程等）、图像（包括但不限于插图、透视图、设计图、音像、模型等），均仅限于作为参考信息和示意，而并非公司做出的任何承诺、邀约、或者要约邀请，不具有任何法律效力。当事人之间的权利义务关系，及公司所提供的任何产品、服务或设备设施的具体情形，应以政府最终批准文件和/或当事人之间依法签订并生效的法律文件为准。同时，为避免歧义，本网站在此进一步明确，本网站中出现的文字描述、图像或视频文件均仅供参考示意，具体情形以公司最终实际提供为准。上述本网站中出现的文字描述和图像等不得用于解释公司与用户之间成立并生效的任何法律文件，亦不构成公司对客户的任何承诺。</p>
+        <p>本网站致力于提供合理、准确、完整的资讯信息，但不保证信息的合理性、准确性和完整性，且不对因信息的不合理、不准确或遗漏导致的任何损失或损害承担责任。本网站所有信息仅供参考，不做交易和服务的根据。任何人因本网站或依赖其内容及信息进行的任何作为或不作为所导致的损失或损害，我方均不承担任何责任，我方亦不就此作出任何明示或暗示的担保。</p>
+        <p>如因系统维护或升级而需暂停服务时，将事先公告。若因线路及非本公司控制范围外的硬件故障或其它不可抗力而导致暂停服务，于暂停服务期间造成的一切不便与损失，本网站均不承担任何责任。</p>
+        <p>本网站在此明确：鉴于网络服务的特殊性，用户同意本网站有权不经事先通知，随时变更、中断或终止部分或全部的网络服务。本网站不担保网络服务不会中断，对网络服务的及时性、安全性、准确性也都不作担保。对于任何情形下，对任何用户就本网站或相关网页的使用或无法使用所引起，或任何未能履约、错误、遗漏、中断、失效、传递延误、电脑病毒或连线、系统故障等引起的任何损失或损害，包括但不限于直接或间接损害，均不承担任何责任。</p>
+        <p>对于任何第三方建立的与本网站的链接，本网站不承担任何形式的责任。任何此种形式的链接并不代表其与公司之间有任何形式的合作、或已经得到我方的认可。因此，对于任何用户由于使用此种链接所可能招致的任何损失或损害，我方不承担任何责任。</p>
+        <p>为方便用户的使用，本网站可能提供与外部网站的链接。对于任何外部链接的网站，或与本网站链接的网页上的内容的真实性、准确性、完整性，我方未进行调查、鉴定和监控，因此对此不承担任何明示或者暗示的担保责任，用户应自行承担使用风险。</p>
+        <p>本网站使用者在使用本网站时，应当符合下列要求：</p>
+        <p>（1）从中国境内向外传输技术性资料时必须符合中国有关法规。&nbsp;</p>
+        <p>（2）使用网络服务不作非法用途。&nbsp;</p>
+        <p>（3）不干扰或混乱网络服务。&nbsp;</p>
+        <p>（4）遵守所有使用网络服务的网络协议、规定、程序和惯例。&nbsp;</p>
+        <p>（5）用户须承诺不传输任何非法的、骚扰性的、中伤他人的、辱骂性的、恐吓性的、伤害性的、庸俗的，淫秽等信息资料。另外，用户也不能传输任何教唆他人构成犯罪行为的资料；不能传输助长国内不利条件和涉及国家安全的资料；不能传输任何不符合当地法规、国家法律和国际法律的资料。未经许可而非法进入其它电脑系统是禁止的。用户需对自己在网上的行为承担法律责任。用户若在本网站上散布和传播反动、色情或其它违反国家法律的信息，本网站的系统记录有可能作为用户违反法律的证据。&nbsp;</p>
+        <p>（6）用户应遵守《中华人民共和国保守国家秘密法》、《中华人民共和国著作权法》、《中华人民共和国计算机信息系统安全保护条例》、《计算机软件保护条例》、《互联网电子公告服务管理规定》、《信息网络传播权保护条例》等有关计算机及互联网规定的相关法律、法规、规章制度。在任何情况下，本网站合理地认为用户的行为可能违反上述法律、法规，本网站可以在任何时候，不经事先通知终止向该用户提供服务。&nbsp;</p>
+        <p>对于违反上述规定的行为，本网站有权在任何时间，以任何理由，且无事先警告或提示的情况下，取消、拒绝或删除用户发布的任何信息（包括用户的注册帐号），并且可以随时限制、暂时冻结或终止用户继续使用本网站的资格。用户因为违反本声明的规定而触犯中华人民共和国法律的，一切后果自己负责，本网站不承担任何责任。</p>
+        <p><strong>权利保留</strong></p>
+        <p>并非所有的用户都可以使用本网站提供的所有内容。您是否能够成为注册用户，享受进一步的服务和网站使用权，将由本网站自行判断和决定。</p>
+        <p>本网站保留对本网站及相关页面包含的信息和资料及其显示的条款、条件和说明单方进行随时变更或修改的权利，且不保证事先会另行通知。如果您继续使用本网站，则视为接受有关信息及资料的变动。本网站保留随时修改或中断服务（全部或部分）而不事先通知用户的权利，且无需就该等修改或中断向用户或第三方承担任何责任。</p>
+        <p>本网站保留对本法律声明不时进行修改的权利，而不会事先通知。对于注册用户，本网站将在法律声明修改后，用户首次登陆时予以提示。对于非注册用户，将不再另行通知。如果用户继续使用本网站，则视为接受该等修改。</p>
+               </div>
+           </div>
+        </div>
+
+
+     <div class="synrbottom"></div>
+  </div>
+  <div class="foot">
+    <p>泰康人寿 版权所有  京ICP备15000213号<br>
+    Copyright Taikanglife.&nbsp;All Rights Reserved </p>
+      <p>本网站所有资讯与说明文字仅供参考，如有与本公司相关公告及产品法律文件不符，以相关公告及产品法律文件为准。 </p>
+        <div class="copyright">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      			<tbody>
+                    <tr>
+                        <td align="right" class="footdh">
+                            <a href="flshm.html">法律声明</a> |     
+                            <a href="wzhdt.html">网站地图</a> |    
+                            <a href="gywm.html">常见问题</a> |     
+                            <a href="#">联系我们</a> |     
+                            <a href="#">招聘信息</a>
+                         </td>
+                  </tr>
+            </tbody>
+        </table>
+    <div style="height:5px"></div>
+      <table width="283" border="0" align="right" cellpadding="0" cellspacing="0">
+        <tbody>
+        <tr>
+        <td width="30" height="29" align="center" valign="middle"><a href="#"><img src="img/s1.jpg"></a></td>
+        <td width="30" align="center" valign="middle"><a href="#"><img src="img/s2.jpg"></a></td>
+        <td width="30" align="center" valign="middle"><a href="#"><img src="img/s3.jpg"></a></td>
+        <td width="30" align="center" valign="middle"><a href="#"><img src="img/s4.jpg"></a></td> 
+          <td> 
+              <div class="search">
+                <select name="" class="inp" onchange="if(this.options[selectedIndex].value!=='-1')window.open(this.options[selectedIndex].value)">
+                  <option value="-1">访问泰康其他网站</option>
+                  <option value="#">泰康人寿</option>
+                  <option value="#">泰康资产</option>
+                  <option value="#">泰康养老</option>
+                </select>
+             </div>
+         </td>
+     	<td width="10"></td>
+        </tr>
+      </tbody></table>
+      </div>
+	</div>
+<div id="windownbg"></div>
+<div class="white_content_sqzl">
+	<ul>
+    	<li><img src="img/gb.jpg" style="float:right;margin-top:3px;" id="sqzl_gb_id"></li>
+        <div style="clear:both;"></div>
+        <li><span class="font30" style="width:100%;text-align:center;">索取资料</span></li>
+        <li><span>索取资料</span>
+        	<select class="inp7">
+       	 		<option value="北京燕园社区相关资料">北京燕园社区相关资料 </option>
+                <option value="上海申园社区相关资料">上海申园社区相关资料 </option>
+                <option value="广州粤园社区相关资料">广州粤园社区相关资料 </option>
+            </select>
+        </li>
+        <li><span>索取方式</span>
+        	<select class="inp7">
+       	 		<option value="电子版">电子版 </option>
+            </select>
+        </li>
+        <li><span>邮箱</span><input type="text" class="inp5" /></li>
+        <li style="height:125px;line-height:125px;margin-top: 12px; margin-bottom: 24px;"><span>备注</span><textarea class="inp9"></textarea></li>
+        <li style="width:100%;text-align:center;padding-left:34px;"><input type="button" id="anniu" style="background:url(img/tj1.jpg); border:0px; width:124px; height:41px">
+        	<input type="reset"  value="" style="background:url(img/qx.jpg); border:0px; width:124px; height:41px">
+        </li>
+        
+    </ul>
+</div>
+
+<!--预约参观-->
+<div class="white_content_yycg">
+	<ul>
+    	<li><img src="img/gb.jpg" style="float:right;margin-top:3px;" id="yycg_gb_id"></li>
+        <div style="clear:both;"></div>
+        <li><span class="font30" style="width:100%;text-align:center;">预约参观</span></li>
+        <li><span>联系人</span><input type="text" class="inp5" /></li>
+        <li><span>联系人电话</span><input type="text" class="inp5" /></li>
+        <li><span>参观人数</span><input type="text" class="inp5" /></li>
+        <li><span>预约时间（提前三天预约）</span>
+        	<input type="text" class="inp6 hasDatepicker" />
+        	<select class="inp8">
+       	 		<option value="09:00">09:00 </option>
+                <option value="10:00">10:00 </option>
+                <option value="11:00">11:00 </option>
+                <option value="12:00">12:00 </option>
+                <option value="13:00">13:00 </option>
+                <option value="14:00">14:00 </option>
+                <option value="15:00">15:00 </option>
+                <option value="16:00">16:00 </option>
+                <option value="17:00">17:00 </option>
+            </select>
+        </li>
+        <li><span>体验馆</span>
+        	<select class="inp7">
+       	 		<option value="泰康之家·燕园">泰康之家·燕园 </option>
+                <option value="泰康之家·申园">泰康之家·申园 </option>
+                <option value="泰康之家·粤园">泰康之家·粤园 </option>
+                <option value="泰康之家·吴园">泰康之家·吴园 </option>
+            </select>
+        </li>
+        <li><span>年龄</span>
+        	<select class="inp7">
+       	 		<option value="60岁以上">60岁以上 </option>
+                <option value="60岁以下">60岁以下 </option>
+            </select>
+        </li>
+        <li><span>性别</span>
+        	<input type="radio" name="sex" checked/>男
+            <input type="radio" name="sex"/>女
+        </li>
+        <li><span>需要什么样的养老服务</span>
+        	<select class="inp7">
+       	 		<option value="独立生活">独立生活 </option>
+                <option value="协助生活">协助生活 </option>
+                <option value="专业护理">专业护理 </option>
+                <option value="康复治疗">康复治疗 </option>
+                <option value="其他">其他 </option>
+            </select>
+        </li>
+        
+        <li style="height:125px;line-height:125px;margin-top: 12px; margin-bottom: 24px;"><span>备注</span><textarea class="inp9"></textarea></li>
+        <li style="width:100%;text-align:center;padding-left:34px;"><input type="button" id="anniu" style="background:url(img/tj1.jpg); border:0px; width:124px; height:41px">
+        	<input type="reset"  value="" style="background:url(img/qx.jpg); border:0px; width:124px; height:41px">
+        </li>
+        
+    </ul>
+</div>
+       <div id="floatLayer"> 
+
+            <div style="cursor:pointer; float:right; height:256px; width:62px; overflow:hidden">
+             <img src="img/a0.jpg" width="62" border="0" onclick="javascript:window.open('http://chat.taikangzhijia.com/');">
+            <img src="img/a1.jpg" width="62" border="0" id="sqzl_id">
+            
+            <img src="img/a2.jpg" width="62" border="0" id="yycg_id">
+            
+            <img src="img/a3.jpg" width="62" border="0" onclick1="javascript:showbox('menzhen');">
+          </div>
+   		</div>
+</body>
+</html>

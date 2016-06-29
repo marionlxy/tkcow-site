@@ -1,0 +1,175 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>泰康之家官方网站</title>
+<meta content="泰康之家,高端养老社区,养老服务,养老医疗" name="keywords"/>
+<meta content="泰康之家官方网站，中国高端养老社区，详细介绍泰康之家养老社区的养老服务、养老医疗。泰康之家致力于打造大规模、全功能、高品质的国际标准医养社区，以医养结合、活力养老、舒适居住为核心，为老人提供全方位的养老生活解决方案。"  name="description"  />
+
+<meta itemprop="operatingSystems" content="Windows,Mac,linux"/> 
+<%@ include file="/include.jsp" %>
+<link href="<%=basePath%>/static/tkcow/css/main.css" rel="stylesheet" />
+<link href="<%=basePath%>/static/tkcow/css/banner.css" rel="stylesheet">
+<script src="<%=basePath%>/static/tkcow/js/jquery-1.10.1.min.js"></script>
+<script src="<%=basePath%>/static/tkcow/js/tkcontent.js"></script>
+<!-- <style>
+.xmly li {
+    width: 306px;
+    height: 211px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+    margin-right: 26px;
+    margin-bottom: 36px;
+    display: inline;
+}
+.xmly li .hzgy {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 306px;
+    height: 37px;
+    line-height: 37px;
+    background: url(img/xmbg.png);
+    padding-left: 15px;
+    color: #FFF;
+}
+#xmlyjd {
+    margin-right: 0px;
+}
+a img:hover {
+    FILTER: alpha(opacity=60);
+    -moz-opacity: 0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+}
+
+.white_content {
+	position:fixed;
+	margin:0 auto;
+    font-size: 15px;
+    width: 60%;
+    background-color: white;
+    border: 10px solid #ccc;
+    padding: 0px 10px;
+	display:none;
+	top:15%;
+	left:20%;
+	z-index: 999902;
+}
+
+</style> -->
+<script>
+
+$(function(){
+	
+	var banUrl = '<%=basePath%>' + '/' + '${banUrl}';
+	//var cs = "url('" + banUrl + "') no-repeat";
+	$(".banner2").find("img").attr("src",banUrl);
+	
+	var id = '${id}' ;
+	var xwcontent = ${xwcontent};
+	var xwud = ${xwud};
+	sessionStorage.setItem("xwcontent",JSON.stringify(xwcontent));
+	sessionStorage.setItem("xwud",JSON.stringify(xwud));
+	$(".content_main li").hover(function(){
+		$(this).find("ul").show();
+		$(this).find("span").css("background","url(img/a2.png)  center center no-repeat");
+		},function(){
+			$(this).find("ul").hide();
+			$(this).find("span").css("background","url(${rootPath}/static/tkcow/img/a1.png)  center center no-repeat");
+			});
+	$(".right").empty();
+	var xwcontent = sessionStorage.getItem("xwcontent");
+	var xwconte=JSON.parse(xwcontent);
+	var xwud = sessionStorage.getItem("xwud");
+	var xwupd=JSON.parse(xwud);
+	var uhtml;
+	uhtml='<div class="righttitle">'+xwconte.xwcontent.xwdes.title+'</div>'+
+			'<div class="rightnr">';
+			if(xwconte.xwcontent.xwdes.content==undefined || xwconte.xwcontent.xwdes.content == null || xwconte.xwcontent.xwdes.content==''){
+				uhtml+=Base64.decode(Base64.decode(xwconte.xwcontent.xwdes.content))+'</div>'+
+				'<p></p><div class="prenext">';
+			}else{
+				uhtml+=Base64.decode(Base64.decode(xwconte.xwcontent.xwdes.content)) +'</div>'+'<p></p><div class="prenext">';
+			}
+			var doUrl = '<%=basePath%>' + '/' + xwupd.xwdo.modUrl;
+			var upUrl = '<%=basePath%>' + '/' + xwupd.xwup.modUrl;
+			if(xwupd.xwup.title==undefined || xwupd.xwup.title==null || xwupd.xwup.title==''){
+				uhtml+='<span>上一篇：已经是第一篇</span><br>'+
+					'<span>下一篇：<a href='+doUrl+'>'+xwupd.xwdo.title+'</a></span></div>';
+			}else{
+				if(xwupd.xwdo.title==undefined || xwupd.xwdo.title==null || xwupd.xwdo.title==''){
+					uhtml+='<span>上一篇：<a href='+upUrl+'>'+xwupd.xwup.title+'</a></span><br>'+
+					'<span>下一篇：已经是最后一篇</span></div>';
+				}else{
+					uhtml+='<span>上一篇：<a href='+upUrl+'>'+xwupd.xwup.title+'</a></span><br>'+
+					'<span>下一篇：<a href='+doUrl+'>'+xwupd.xwdo.title+'</a></span></div>';
+				}
+			}
+			$(".right").append(uhtml);
+});
+function leftLiClick(obj){
+	$(obj).children("a").css("color","#21acd8");
+	$(obj).siblings("li").children("a").css("color","#333");
+	$(obj).next("div").css("display","block");
+	$(obj).siblings("li").next("div").css("display","none");
+	var divLen=$(obj).next("div").find("div").length;
+	if(divLen>0){
+		$(obj).next("div").find("div").css("display","block");
+		}
+	
+	}
+function left_change(obj){
+	$(obj).children("a").css("color","#21acd8");
+	$(obj).siblings("li").children("a").css("color","#333");
+	var divLen=$(obj).next("div").length;
+	if(divLen==0){
+		$(obj).siblings("li").next("div").css("display","none");
+		}
+	}
+function chil_change(obj){
+	$(obj).children("a").css("color","#21acd8");
+	$(obj).siblings("li").children("a").css("color","#333");
+	}
+function window_ceng(obj){
+	$("#windownbg").css("display","block");
+	$(".white_content").css("display","block");
+	}
+</script>
+</head>
+<body>
+     <div class="allContent">
+        
+       <%@ include file="/WEB-INF/view/tkcow/titile.jsp"%>
+   <div class="banner2" >
+        <img src="" >
+    	<div class="bai"></div>
+        
+    </div>
+     <div class="synr1">
+        <div class="main">
+        <div class="left">
+  <%@ include file="/WEB-INF/view/leftmenu/leftmenuIndex.jsp"%>
+        
+          </div>
+          
+                    
+        <div class="right">
+        </div>
+
+
+     <div class="synrbottom"></div>
+  </div>
+  <%@ include file="/WEB-INF/view/tkcow/foot.jsp"%>
+  
+  
+       <div id="floatLayer"> 
+			<%@ include file="/rightLogin.jsp"%>
+   		</div>
+</body>
+</html>

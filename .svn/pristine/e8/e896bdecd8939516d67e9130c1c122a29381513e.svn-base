@@ -1,0 +1,243 @@
+package com.taikang.tkcow.moduleContent.controller;
+
+import com.taikang.tkcow.moduleContent.action.IModuleContentAction;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.List;
+
+import org.baitanw.maomao.utils.PageBean;
+import org.springframework.stereotype.Controller;
+
+import com.taikang.udp.framework.core.persistence.pagination.CurrentPage;
+import com.taikang.udp.framework.common.datastructre.Dto;
+
+import java.util.HashMap;
+
+import com.taikang.udp.framework.common.datastructre.impl.BaseDto;
+
+import javax.annotation.Resource;
+
+import com.taikang.udp.framework.core.web.BaseController;
+import com.taikang.udp.sys.util.CommonUtil;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Arrays;
+
+
+/**
+  * ModuleContentController
+  */
+@Controller("moduleContentController")
+@RequestMapping(value="/moduleContent")
+public class ModuleContentController  extends BaseController  {
+		
+	@Resource(name=IModuleContentAction.ACTION_ID)
+	private IModuleContentAction moduleContentAction;
+		
+	/**
+	 * 打开主查询页面
+	 * @return 页面地址
+	 */
+	@RequestMapping("")
+	public String showModuleContentIndexPage() {
+		return "moduleContent/moduleContentIndex"; 
+	}
+	
+	/**
+	 * 查询信息列表
+	 * @return 分页列表数据
+	 */
+	@RequestMapping("/list")
+	@ResponseBody
+	public Map<String,Object> getModuleContentList(HttpServletRequest request,CurrentPage page){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		page.setParamObject(CommonUtil.getParamAsDto(request));
+		CurrentPage currentPage = moduleContentAction.queryForPage(page);
+		
+		map.put("rows", currentPage.getPageItems());
+		map.put("total", currentPage.getTotalRows());
+		
+		return map;
+	}
+
+	/**
+	 * 打开新增或修改页面
+	 * @return
+	 */
+	@RequestMapping("edit")
+	public String showModuleContentEditPage(String rowId,Model model) {
+		
+		if(rowId!=null && !rowId.equals(""))
+		{
+			model.addAttribute("rowId",rowId );
+		}
+		
+		return "moduleContent/moduleContentEdit"; 
+	}
+	
+	/**
+	 * 获取一条记录详细信息，用来填充修改界面
+	 * @return
+	 */
+	@RequestMapping("/getOne")
+	@ResponseBody
+	public Dto getModuleContentById(@RequestParam("rowId")String rowId)
+	{
+		Dto param = new BaseDto();
+		param.put("rowId", rowId);
+		return moduleContentAction.findOne(param);
+	}
+	
+	/**
+	 * 保存新增或修改的记录，将其持久化到数据库中
+	 * @return
+	 */
+	@RequestMapping("/save")
+	@ResponseBody
+	private Map<String,String> saveModuleContentInfo(HttpServletRequest request)
+	{
+		Map<String,String> map=new HashMap<String,String>();
+		
+		Dto param = CommonUtil.getParamAsDto(request);
+		if(param.get("rowId") ==null ||"".equals(param.get("rowId")))
+		{
+			moduleContentAction.insertObject(param);
+			map.put(MESSAGE_INFO, "新增成功！");
+		}
+		else
+		{
+			moduleContentAction.updateObject(param);
+			map.put(MESSAGE_INFO, "更新成功！");
+		}
+		map.put(RTN_RESULT, "true");
+		
+		return map;
+	}
+	
+	/**
+	*删除一条或多条记录
+	*/
+	@RequestMapping(value="/del")
+	@ResponseBody
+	public Map<String, String> deleteModuleContent(@RequestParam("rowId") String rowId) {
+		Map<String, String> map = new HashMap<String, String>();
+		Dto param = new BaseDto();
+		param.put("rowId", rowId);
+		moduleContentAction.deleteObject(param);
+		
+		map.put(RTN_RESULT, "true");
+		map.put(MESSAGE_INFO, "操作成功！");
+		
+		return map;
+	}
+	
+	/**
+	 * 查询下级列表内容
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/contentfindOnelists")
+	public String getZjowModuleContentfindOnes(String modid,String modType,Model model){
+		Dto map = new BaseDto();
+		Dto map2 = new BaseDto();
+		map.put("modId", modid); //模块id
+		map.put("modType", modType); // 模块类型
+		Dto d = moduleContentAction.findzjowModuleconOne(map);
+		Dto map1 = new BaseDto();
+		map1.put("mod_id", modid); //模块id
+		map1.put("mod_type", modType); // 模块类型
+		List<Dto> list = moduleContentAction.findzjowModulecont(map1);
+		System.out.println(list);
+		List<Dto> dtoList = new ArrayList<Dto>();
+		for (int i = 0; i < list.size(); i++) {
+			Dto menuParam = new BaseDto();
+			menuParam.put("url", list.get(i).get("url"));
+			menuParam.put("contlist", list.get(i).get("contlist"));
+			dtoList.add(menuParam);
+		}
+		//dtoList.add(d);
+		map2.put("contlist", dtoList);
+		map2.put("contents", d);
+		model.addAttribute("contlist",map2.toJson());
+		System.out.println(map2.toJson());
+		return "tkcontent/huoliyl";
+	}
+	
+	
+	/**
+	 * 查询新闻事件列表
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/contentfindOnelist/{modid}/{modType}")
+	public String getZjowModuleContentfindOne(@PathVariable("modid")String modid,@PathVariable("modType")String modType,Model model,PageBean pageBean){
+		Dto map1 = new BaseDto();
+		Dto map = new BaseDto();
+		String url=null;
+		String modname=null;
+		map1.put("mod_id", modid); //模块id
+		map1.put("mod_type", modType); // 模块类型
+		List<Dto> list = moduleContentAction.findzjowModulexwsj(map1);
+		if(list.size()>0){
+			for (int j = 0; j < list.size(); j++) {
+				pageBean.setTotalCount((Integer) list.get(j).get("size"));
+				modname = (String)list.get(j).get("mod_name");
+			}
+			int pageNo = pageBean.getPageNo();
+			int pageSize=2; //显示多少条
+			pageBean.setPageCount(pageSize); //设置显示多少条
+			int start = (pageNo - 1)* pageSize;
+			map1.put("pageNo", start);
+			map1.put("pageSize", pageSize);
+			List<Dto> listpa = moduleContentAction.findzjowModulexwsjpage(map1);
+			List<Dto> dtoList = new ArrayList<Dto>();
+			
+			for (int i = 0; i < listpa.size(); i++) {
+				url = (String) listpa.get(i).get("url");
+				Dto menuParam = new BaseDto();
+				menuParam.put("url", listpa.get(i).get("url"));
+				//menuParam.put("mod_name", list.get(i).get("mod_name"));
+				menuParam.put("xwslist", listpa.get(i).get("xwlist"));
+				dtoList.add(menuParam);
+				
+				map.put("xwList", dtoList);
+				map.put("mod_name", modname);
+				System.out.println(map.toJson());
+				model.addAttribute("xwlists",map.toJson());
+				model.addAttribute("pageBean", pageBean);
+			}
+		}
+		return url;
+	}
+	
+	/**
+	 * 查询新闻事件单个详细内容和查询上一篇和下一篇
+	 * @return
+	 */
+	@RequestMapping("/getxwOne")
+	public String getModuleon(String modid,String modType,Model model){
+		Dto param = new BaseDto();
+		param.put("modId", modid);
+		Dto d = moduleContentAction.findxwOne(param);
+		param.put("modType", modType);
+		//查询新闻内容的上一篇和下一篇
+		Dto upd = moduleContentAction.findupxwOne(param);
+		String url = (String) d.get("url");
+		Dto map = new BaseDto();
+		map.put("xwcontent", d);
+		model.addAttribute("xwcontent", map.toJson());
+		model.addAttribute("xwud", upd.toJson());
+		model.addAttribute("id", modid);
+		return url;
+	}
+
+}
+

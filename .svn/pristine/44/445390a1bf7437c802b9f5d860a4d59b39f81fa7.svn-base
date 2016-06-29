@@ -1,0 +1,96 @@
+package com.taikang.tkcow.banner.action.impl;
+
+
+import com.taikang.udp.framework.common.datastructre.impl.BaseDto;
+import javax.annotation.Resource;
+import com.taikang.tkcow.banner.action.IBannerAction;
+import com.taikang.tkcow.banner.service.IBannerService;
+import com.taikang.tkcow.banner.model.BannerBO;
+import java.util.List;
+import com.taikang.udp.framework.core.action.impl.BaseActionImpl;
+import com.taikang.udp.framework.core.persistence.pagination.CurrentPage;
+import java.util.Arrays;
+import com.taikang.udp.framework.common.datastructre.Dto;
+import org.springframework.stereotype.Service;
+
+/**
+  * BannerAction
+  */
+  @Service(IBannerAction.ACTION_ID)
+public class BannerActionImpl extends BaseActionImpl 
+  implements IBannerAction {
+
+    /**
+      * 注入service
+      */
+    @Resource(name=IBannerService.SERVICE_ID)
+	private IBannerService<BannerBO> bannerService;	
+	
+	/**
+	  * 增加数据
+	  */
+	public void insertObject(Dto param) {
+		logger.debug("<======BannerAction--addBanner======>");
+		
+		BannerBO bannerBO = BaseDto.toModel(BannerBO.class , param);
+		bannerService.insertObject(bannerBO);
+	}
+	
+	/**
+      * 修改数据
+      */
+	public void updateObject(Dto param){
+		logger.debug("<======BannerAction--updateBanner======>");
+		
+		BannerBO bannerBO = BaseDto.toModel(BannerBO.class , param);
+		bannerService.updateObject(bannerBO);
+	}
+
+	 /**
+      * 删除数据
+      */
+	public void deleteObject(Dto param) {
+		logger.debug("<======BannerAction--deleteBanner======>");
+		
+		BannerBO bannerBO = BaseDto.toModel(BannerBO.class , param);
+		bannerService.deleteObject(bannerBO);
+	}
+	
+	/**
+      * 查询单条数据
+      */
+	public Dto findOne(Dto param) {
+		logger.debug("<======BannerAction--findOneBanner======>");
+		
+		BannerBO bannerBO = BaseDto.toModel(BannerBO.class , param);
+		return bannerService.findOne(bannerBO).toDto();//返回的BO对象自动转换成Dto返回
+	}  
+	
+	/**
+      * 查询所有数据
+      */
+	public List<Dto> findAll(Dto param) {
+		logger.debug("<======BannerAction--findAllBanner======>");
+				
+		return bannerService.findAllMap(param);
+	}
+	
+	/**
+     * 查询所有首页banner
+     */
+	public List<Dto> findAllMapHomeBanner(Dto param) {
+		logger.debug("<======BannerAction--findAllMapHomeBanner======>");
+				
+		return bannerService.findAllMapHomeBanner(param);
+	} 
+	
+		
+	 /**
+      * 分页查询数据
+      */
+	public CurrentPage queryForPage(CurrentPage currentPage){
+		logger.debug("<======BannerAction--queryBannerForPage======>");
+		
+		return bannerService.queryForPage(currentPage);
+	}	
+}

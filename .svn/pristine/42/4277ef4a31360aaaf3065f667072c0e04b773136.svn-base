@@ -1,0 +1,169 @@
+package com.taikang.tkcow.moduleContent.service.impl;
+ 
+import com.taikang.tkcow.moduleContent.service.IModuleContentService;
+import com.taikang.tkcow.moduleContent.model.ModuleContentBO;
+import com.taikang.tkcow.moduleDes.model.ModuleDesBO;
+
+import java.util.List;
+
+import com.taikang.udp.framework.core.persistence.pagination.CurrentPage;
+
+import java.util.Arrays;
+
+import com.taikang.udp.framework.common.datastructre.Dto;
+import com.taikang.udp.framework.common.datastructre.impl.BaseDto;
+
+import org.springframework.stereotype.Service;
+
+import com.taikang.udp.framework.core.service.impl.BaseServiceImpl;
+ 
+  
+/**
+  * ModuleContentServiceImpl
+  */
+ @Service(IModuleContentService.SERVICE_ID)
+ public class ModuleContentServiceImpl extends BaseServiceImpl 
+ implements IModuleContentService<ModuleContentBO>  
+  {
+  	 	 	
+ 	/**
+	  * 增加数据
+	  */
+	public void insertObject(ModuleContentBO moduleContent) {
+		logger.debug("<======ModuleContentServiceImpl--insertModuleContent======>");		
+		appDao.insert("ModuleContent.addModuleContent",moduleContent);
+	} 	
+ 	
+ 	/**
+      * 修改数据
+      */
+	public void updateObject(ModuleContentBO moduleContent) {
+		logger.debug("<======ModuleContentServiceImpl--updateModuleContent======>");
+		appDao.update("ModuleContent.updateModuleContent",moduleContent);
+	}
+
+	 /**
+      * 删除数据
+      */
+	public void deleteObject(ModuleContentBO moduleContent) {
+		logger.debug("<======ModuleContentServiceImpl--deleteModuleContent======>");
+		appDao.delete("ModuleContent.deleteModuleContent",moduleContent);
+	}
+	
+	/**
+      * 查询数据
+      */
+	public ModuleContentBO findOne(ModuleContentBO moduleContent) {
+		logger.debug("<======ModuleContentServiceImpl--findModuleContent======>");
+		
+		ModuleContentBO moduleContentBackBO=appDao.queryOneObject("ModuleContent.findOneModuleContent", moduleContent);
+		return moduleContentBackBO;		
+	}
+	
+	/**
+      * 查询所有数据
+      */
+	public List<ModuleContentBO> findAll(ModuleContentBO  moduleContent) {
+		logger.debug("<======ModuleContentServiceImpl--findAllModuleContent======>");
+		return appDao.queryForEntityList("ModuleContent.findAllModuleContent", moduleContent);
+	}
+	
+	
+	 /**
+      * 分页查询数据
+      */
+	public CurrentPage queryForPage(CurrentPage currentPage) {
+		logger.debug("<======ModuleContentServiceImpl--queryModuleContentForPage======>");
+		return appDao.queryForPage("ModuleContent.queryModuleContentForPage", currentPage);
+	}
+		
+	/**
+      * 查询所有数据 ，重新组装为map
+      */
+	public List<Dto> findAllMap(Dto param){
+		logger.debug("<======ModuleContentServiceImpl--findAllMapModuleContent======>");		
+		return appDao.queryForMapList("ModuleContent.findAllMapModuleContent", param);
+	}
+
+	/**
+	 * 查询单条内容数据
+	 */
+	public Dto findzjowModuleconOne(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findGoods======>");
+		ModuleContentBO moduleContentBackBO = BaseDto.toModel(ModuleContentBO.class , param);
+		return appDao.queryOneObject("ModuleContent.findOnentConte", moduleContentBackBO).toDto(); 
+	}
+
+	/**
+     * 查询所有数据 ，重新组装为map
+     */
+	public List<Dto> findzjowModulecont(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findzjowModulecont======>");	
+		return appDao.queryForMapList("ModuleContent.findzjowModulecont", param);
+	}
+
+	/**
+	 * 查询所有新闻事件
+	 */
+	public List<Dto> findzjowModulexwsj(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findzjowModulexwsj======>");	
+		return appDao.queryForMapList("ModuleContent.findzjowModulexwsj", param);
+	}
+
+	/**
+	 * 查询单个新闻详细内容
+	 */
+	public Dto findxwOne(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findxwOne======>");
+		ModuleContentBO moduleContentBackBO = BaseDto.toModel(ModuleContentBO.class , param);
+		return appDao.queryOneObject("ModuleContent.findxwOne", moduleContentBackBO).toDto();
+	}
+
+	/**
+	 * 查询上一篇内容
+	 */
+	public Dto findupxwOne(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findupxwOne======>");
+		ModuleContentBO moduleContentBackBO = BaseDto.toModel(ModuleContentBO.class , param);
+		return appDao.queryOneObject("ModuleContent.findupxwOne", moduleContentBackBO).toDto(); 
+	}
+
+	/**
+	 * 查询下一篇内容
+	 */
+	public Dto finddoxwOne(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--finddoxwOne======>");
+		ModuleContentBO moduleContentBackBO = BaseDto.toModel(ModuleContentBO.class , param);
+		return appDao.queryOneObject("ModuleContent.finddoxwOne", moduleContentBackBO).toDto(); 
+	}
+
+	/**
+	 * 分页查询新闻列表
+	 */
+	public List<Dto> findzjowModulexwsjpage(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findzjowModulexwsjpage======>");	
+		return appDao.queryForMapList("ModuleContent.findzjowModulexwsjpage", param);
+	}
+
+	/**
+ 	 * 查询关于我们父节点内容(类型为07)
+ 	 * @param param
+ 	 * @return
+ 	 */
+	public Dto findparOne(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findparOne======>");
+		ModuleContentBO moduleContentBackBO = BaseDto.toModel(ModuleContentBO.class , param);
+		return appDao.queryOneObject("ModuleContent.findparOne", moduleContentBackBO).toDto();
+	}
+
+	/**
+ 	 * 查询关于我们子节点内容(类型为07)
+ 	 * @param param
+ 	 * @return
+ 	 */
+	public List<Dto> findchilrOne(Dto param) {
+		logger.debug("<======ModuleContentServiceImpl--findchilrOne======>");
+		return appDao.queryForMapList("ModuleContent.findchilrOne", param);
+	}
+ }
+  
